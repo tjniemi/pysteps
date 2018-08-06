@@ -35,6 +35,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="noise.html" title="Noise generators (pysteps.noise)"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -51,6 +54,8 @@
             
   <div class="section" id="scale-based-decomposition-of-precipitation-fields-pysteps-cascade">
 <span id="pysteps-cascade"></span><h1>Scale-based decomposition of precipitation fields (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.cascade</span></code>)<a class="headerlink" href="#scale-based-decomposition-of-precipitation-fields-pysteps-cascade" title="Permalink to this headline">¶</a></h1>
+<p>Methods for band-pass filtering and scale-based decomposition of 2d precipitation
+fields.</p>
 <div class="section" id="module-pysteps.cascade.interface">
 <span id="pysteps-cascade-interface"></span><h2>pysteps.cascade.interface<a class="headerlink" href="#module-pysteps.cascade.interface" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -121,21 +126,37 @@ and a bandpass filter</td>
 from two-dimensional images in the frequency domain.</p>
 <p>The methods in this module implement the following interface:</p>
 <blockquote>
-<div>filter_xxx(L, n, optional arguments)</div></blockquote>
-<p>where L is size of the input field, respectively, and n is the number of 
-frequency bands to use.</p>
+<div>filter_xxx(shape, n, optional arguments)</div></blockquote>
+<p>where shape is the shape of the input field, respectively, and n is the number 
+of frequency bands to use.</p>
 <p>The output of each filter function is a dictionary containing the following 
 key-value pairs:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>weights_1d       2d array of shape (n, L/2) containing 1d filter weights </dt>
-<dd>for each frequency band k=1,2,…,n</dd>
-<dt>weights_2d       3d array of shape (n, L, L) containing the 2d filter </dt>
-<dd>weights for each frequency band k=1,2,…,n</dd>
-<dt>central_freqs    1d array of shape n containing the central frequencies of </dt>
-<dd>the filters</dd>
-</dl>
-</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>weights_1d</td>
+<td>2d array of shape (n, r) containing 1d filter weights
+for each frequency band k=1,2,…,n</td>
+</tr>
+<tr class="row-odd"><td>weights_2d</td>
+<td>3d array of shape (n, M, N) containing the 2d filter
+weights for each frequency band k=1,2,…,n</td>
+</tr>
+<tr class="row-even"><td>central_freqs</td>
+<td>1d array of shape n containing the central frequencies of
+the filters</td>
+</tr>
+</tbody>
+</table>
+<p>where r = int(max(N, M)/2)+1</p>
 <p>The filter weights are assumed to be normalized so that for any Fourier 
 wavenumber they sum to one.</p>
 <dl class="function">
@@ -183,7 +204,7 @@ specified frequency bands.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<p><a class="reference internal" href="index.html#pch2018" id="id1">[6]</a></p>
+<p><a class="reference internal" href="index.html#pch2018" id="id1">[2]</a></p>
 </dd></dl>
 
 <dl class="function">
@@ -197,8 +218,8 @@ weights are set to one.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>shape</strong> : int or tuple</p>
 <blockquote>
-<div><p>The dimensions (height, width) of the input field. If shape is an int, it 
-assumes to be a square domain.</p>
+<div><p>The dimensions (height, width) of the input field. If shape is an int, 
+it assumes to be a square domain.</p>
 </div></blockquote>
 <p><strong>n</strong> : int</p>
 <blockquote class="last">
@@ -233,9 +254,9 @@ dictionary with the following key-value pairs:</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>cascade_levels</td>
-<td>three-dimensional array of shape (n,L,L), where n is the
-number of cascade levels and L is the size of the input
-field</td>
+<td>three-dimensional array of shape (k,m,n), where k is the
+number of cascade levels and the input fields have shape
+(m,n)</td>
 </tr>
 <tr class="row-odd"><td>means</td>
 <td>list of mean values for each cascade level</td>
@@ -319,6 +340,9 @@ Pixels with MASK==False are excluded from the computations.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="noise.html" title="Noise generators (pysteps.noise)"
              >next</a> |</li>

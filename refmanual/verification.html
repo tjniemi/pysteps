@@ -35,6 +35,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="visualization.html" title="Visualization (pysteps.visualization)"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -51,6 +54,7 @@
             
   <div class="section" id="forecast-verification-pysteps-verification">
 <span id="pysteps-verification"></span><h1>Forecast verification (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.verification</span></code>)<a class="headerlink" href="#forecast-verification-pysteps-verification" title="Permalink to this headline">¶</a></h1>
+<p>Methods for verification of deterministic and ensemble forecasts.</p>
 <div class="section" id="pysteps-verification-detcatscores">
 <h2>pysteps.verification.detcatscores<a class="headerlink" href="#pysteps-verification-detcatscores" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
@@ -59,16 +63,86 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">scores_det_cont_fsct</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.verification.detcatscores.scores_det_cat_fcst" title="pysteps.verification.detcatscores.scores_det_cat_fcst"><code class="xref py py-obj docutils literal"><span class="pre">scores_det_cat_fcst</span></code></a>(pred,&nbsp;obs,&nbsp;thr,&nbsp;scores)</td>
+<td>Calculate simple and skill scores for deterministic categorical forecasts.</td>
 </tr>
 </tbody>
 </table>
 <span class="target" id="module-pysteps.verification.detcatscores"></span><p>Forecast evaluation and skill scores for deterministic categorial forecasts.</p>
 <dl class="function">
 <dt id="pysteps.verification.detcatscores.scores_det_cat_fcst">
-<code class="descclassname">pysteps.verification.detcatscores.</code><code class="descname">scores_det_cat_fcst</code><span class="sig-paren">(</span><em>pred, obs, thr, scores=['csi']</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.verification.detcatscores.scores_det_cat_fcst" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate simple and skill scores for deterministic categorical forecasts</p>
+<code class="descclassname">pysteps.verification.detcatscores.</code><code class="descname">scores_det_cat_fcst</code><span class="sig-paren">(</span><em>pred</em>, <em>obs</em>, <em>thr</em>, <em>scores</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.verification.detcatscores.scores_det_cat_fcst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate simple and skill scores for deterministic categorical forecasts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pred</strong> : array_like</p>
+<blockquote>
+<div><p>predictions</p>
+</div></blockquote>
+<p><strong>obs</strong> : array_like</p>
+<blockquote>
+<div><p>verifying observations</p>
+</div></blockquote>
+<p><strong>scores</strong> : list</p>
+<blockquote>
+<div><p>a list containing the names of the scores to be computed, the full list 
+is:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ACC</td>
+<td>accuracy (proportion correct)</td>
+</tr>
+<tr class="row-odd"><td>BIAS</td>
+<td>frequency bias</td>
+</tr>
+<tr class="row-even"><td>CSI</td>
+<td>critical success index (threat score)</td>
+</tr>
+<tr class="row-odd"><td>FA</td>
+<td>false alarm rate (prob. of false detection)</td>
+</tr>
+<tr class="row-even"><td>FAR</td>
+<td>false alarm ratio</td>
+</tr>
+<tr class="row-odd"><td>GSS</td>
+<td>Gilbert skill score (equitable threat score)</td>
+</tr>
+<tr class="row-even"><td>HK</td>
+<td>Hanssen-Kuipers discriminant (Pierce skill score)</td>
+</tr>
+<tr class="row-odd"><td>HSS</td>
+<td>Heidke skill score</td>
+</tr>
+<tr class="row-even"><td>POD</td>
+<td>probability of detection (hit rate)</td>
+</tr>
+<tr class="row-odd"><td>SEDI</td>
+<td>linear regression slope (conditional bias)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> : list</p>
+<blockquote class="last">
+<div><p>the verification results</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -80,16 +154,88 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">scores_det_cont_fsct</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.verification.detcontscores.scores_det_cont_fcst" title="pysteps.verification.detcontscores.scores_det_cont_fcst"><code class="xref py py-obj docutils literal"><span class="pre">scores_det_cont_fcst</span></code></a>(pred,&nbsp;obs,&nbsp;scores[,&nbsp;offset])</td>
+<td>Calculate simple and skill scores for deterministic continuous forecasts</td>
 </tr>
 </tbody>
 </table>
 <span class="target" id="module-pysteps.verification.detcontscores"></span><p>Forecast evaluation and skill scores for deterministic continuous forecasts.</p>
 <dl class="function">
 <dt id="pysteps.verification.detcontscores.scores_det_cont_fcst">
-<code class="descclassname">pysteps.verification.detcontscores.</code><code class="descname">scores_det_cont_fcst</code><span class="sig-paren">(</span><em>pred, obs, scores=['corr_p'], offset=0.01</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.verification.detcontscores.scores_det_cont_fcst" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pysteps.verification.detcontscores.</code><code class="descname">scores_det_cont_fcst</code><span class="sig-paren">(</span><em>pred</em>, <em>obs</em>, <em>scores</em>, <em>offset=0.01</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.verification.detcontscores.scores_det_cont_fcst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate simple and skill scores for deterministic continuous forecasts</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pred</strong> : array_like</p>
+<blockquote>
+<div><p>predictions</p>
+</div></blockquote>
+<p><strong>obs</strong> : array_like</p>
+<blockquote>
+<div><p>verifying observations</p>
+</div></blockquote>
+<p><strong>scores</strong> : list</p>
+<blockquote>
+<div><p>a list containing the names of the scores to be computed, the full list 
+is:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>beta</td>
+<td>linear regression slope (conditional bias)</td>
+</tr>
+<tr class="row-odd"><td>corr_p</td>
+<td>pearson’s correleation coefficien (linear correlation)</td>
+</tr>
+<tr class="row-even"><td>corr_s</td>
+<td>spearman’s correlation coefficient (rank correlation)</td>
+</tr>
+<tr class="row-odd"><td>ME_add</td>
+<td>mean error or bias of additive residuals</td>
+</tr>
+<tr class="row-even"><td>ME_mult</td>
+<td>mean error or bias of multiplicative residuals</td>
+</tr>
+<tr class="row-odd"><td>RMSE_add</td>
+<td>root mean squared additive error</td>
+</tr>
+<tr class="row-even"><td>RMSE_mult</td>
+<td>root mean squared multiplicative error</td>
+</tr>
+<tr class="row-odd"><td>RV_add</td>
+<td>reduction of variance (Brier Score, Nash-Sutcliffe Efficiency)</td>
+</tr>
+<tr class="row-even"><td>RV_mult</td>
+<td>reduction of variance in multiplicative space</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>offset</strong> : float</p>
+<blockquote>
+<div><p>an offset that is added to both prediction and observation to avoid 0 division
+when computing multiplicative residuals</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> : list</p>
+<blockquote class="last">
+<div><p>list containing the verification results</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -129,13 +275,13 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X_f</strong> : array-like</p>
 <blockquote>
-<div><p>Array of shape (l,m,n) containing the forecast fields of shape (m,n) from
-l ensemble members.</p>
+<div><p>Array of shape (l,m,n) containing the forecast fields of shape (m,n) 
+from l ensemble members.</p>
 </div></blockquote>
 <p><strong>X_o</strong> : array_like</p>
 <blockquote>
-<div><p>Array of shape (m,n) containing the observed field corresponding to the 
-forecast.</p>
+<div><p>Array of shape (m,n) containing the observed field corresponding to 
+the forecast.</p>
 </div></blockquote>
 <p><strong>threshold</strong> : float</p>
 <blockquote>
@@ -160,7 +306,7 @@ Rezcova 2009).</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<p><a class="reference internal" href="index.html#zr2009" id="id1">[9]</a></p>
+<p>[ZR2009]</p>
 </dd></dl>
 
 <dl class="function">
@@ -173,8 +319,8 @@ Rezcova 2009).</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X_f</strong> : array-like</p>
 <blockquote>
-<div><p>Array of shape (l,m,n) containing the forecast fields of shape (m,n) from
-l ensemble members.</p>
+<div><p>Array of shape (l,m,n) containing the forecast fields of shape (m,n) 
+from l ensemble members.</p>
 </div></blockquote>
 <p><strong>threshold</strong> : float</p>
 <blockquote>
@@ -199,7 +345,7 @@ in Zacharov and Rezcova 2009).</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<p><a class="reference internal" href="index.html#zr2009" id="id2">[9]</a></p>
+<p>[ZR2009]</p>
 </dd></dl>
 
 <dl class="function">
@@ -212,8 +358,8 @@ in Zacharov and Rezcova 2009).</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X_f</strong> : array-like</p>
 <blockquote>
-<div><p>Array of shape (n,m) containing the values from n ensemble forecasts with 
-m members.</p>
+<div><p>Array of shape (n,m) containing the values from n ensemble forecasts 
+with m members.</p>
 </div></blockquote>
 <p><strong>X_o</strong> : array_like</p>
 <blockquote class="last">
@@ -237,6 +383,10 @@ forecast.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>rankhist</strong> : dict</p>
 <blockquote>
 <div><p>A rank histogram object created with rankhist_init.</p>
+</div></blockquote>
+<p><strong>normalize</strong> : bool</p>
+<blockquote>
+<div><p>If True, normalize the rank histogram so that the bin counts sum to one.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -433,7 +583,7 @@ ensemble having m members.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<p><a class="reference internal" href="index.html#her2000" id="id3">[4]</a></p>
+<p>[Her2000]</p>
 </dd></dl>
 
 <dl class="function">
@@ -609,7 +759,7 @@ if the number of samples in a bin is smaller than bin_count.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<p><a class="reference internal" href="index.html#bs2007" id="id4">[2]</a></p>
+<p>[BS2007]</p>
 </dd></dl>
 
 </div>
@@ -665,7 +815,7 @@ the threshold.</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<p><a class="reference internal" href="index.html#rl2008" id="id5">[7]</a>, <a class="reference internal" href="index.html#ewwm2013" id="id6">[3]</a></p>
+<p>[RL2008], [EWWM2013]</p>
 </dd></dl>
 
 </div>
@@ -703,6 +853,9 @@ the threshold.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="visualization.html" title="Visualization (pysteps.visualization)"
              >next</a> |</li>

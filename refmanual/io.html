@@ -35,6 +35,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="oflow.html" title="Optical flow methods (pysteps.optflow)"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -51,13 +54,22 @@
             
   <div class="section" id="input-output-routines-pysteps-io">
 <span id="pysteps-io"></span><h1>Input/output routines (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.io</span></code>)<a class="headerlink" href="#input-output-routines-pysteps-io" title="Permalink to this headline">¶</a></h1>
+<p>Methods for browsing data archives, reading 2d precipitation fields and writing
+forecasts into files.</p>
 <div class="section" id="module-pysteps.io.interface">
 <span id="pysteps-io-interface"></span><h2>pysteps.io.interface<a class="headerlink" href="#module-pysteps.io.interface" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pysteps.io.interface.get_method">
-<code class="descclassname">pysteps.io.interface.</code><code class="descname">get_method</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.interface.get_method" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a callable function for the importer method corresponding to
-the given name. The available options are:</p>
+<code class="descclassname">pysteps.io.interface.</code><code class="descname">get_method</code><span class="sig-paren">(</span><em>name</em>, <em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.interface.get_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a callable function for the method corresponding to the given name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
+<blockquote>
+<div><p>Name of the method. The available options are:</p>
+<p>Importers:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="25%" />
@@ -83,6 +95,32 @@ precipitation intensity composites (mm/h)</td>
 </tr>
 <tr class="row-odd"><td>odim_hdf5</td>
 <td>ODIM HDF5 file format used by Eumetnet/OPERA</td>
+</tr>
+</tbody>
+</table>
+<p>Exporters:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>netcdf</td>
+<td>NetCDF files conforming to the CF 1.7 specification</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>type</strong> : str</p>
+<blockquote class="last">
+<div><p>Type of the method. The available options are ‘importer’ and ‘exporter’.</p>
+</div></blockquote>
+</td>
 </tr>
 </tbody>
 </table>
@@ -389,7 +427,7 @@ identifier is ‘QIND’.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body"><p class="first"><strong>qty</strong> : str</p>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><p class="first"><strong>qty</strong> : {‘RATE’, ‘ACRR’, ‘DBZH’}</p>
 <blockquote class="last">
 <div><p>The quantity to read from the file. The currently supported identitiers
 are: ‘RATE’=instantaneous rain rate (mm/h), ‘ACRR’=hourly rainfall
@@ -464,43 +502,76 @@ formats.</p>
 <p>Each exporter method in this module has its own initialization function that 
 implements the following interface:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>initialize_forecast_exporter_xxx(filename, startdate, timestep, num_timesteps, </dt>
-<dd>shape, num_ens_members, metadata, incremental=None)</dd>
-</dl>
-<dl class="docutils">
-<dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>Name of the output file.</dd>
-<dt>startdate <span class="classifier-delimiter">:</span> <span class="classifier">datetime.datetime</span></dt>
-<dd>Start date of the forecast.</dd>
-<dt>timestep <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Time step of the forecast (minutes).</dd>
-<dt>num_timesteps <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of time steps in the forecast. This argument is ignored if 
-incremental is set to ‘timestep’.</dd>
-<dt>shape <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
-<dd>Two-element tuple defining the shape (height,width) of the forecast grids.</dd>
-<dt>num_ens_members <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
-<dd>Number of ensemble members in the forecast. This argument is ignored if 
-incremental is set to ‘member’.</dd>
-<dt>metadata <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
-<dd>Metadata dictionary containing the projection,x1,x2,y1,y2 and unit 
-attributes described in the documentation of pysteps.io.importers.</dd>
-<dt>incremental <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>Allow incremental writing of datasets into the netCDF file. The 
-available options are: ‘timestep’=write a forecast or a forecast 
-ensemble for a given time step or ‘member’=write a forecast sequence 
-for a given ensemble member.</dd>
-</dl>
-<dl class="docutils">
-<dt>out <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
-<dd>An exporter object that can be used with export_forecast_dataset to write 
-datasets into the netCDF file.</dd>
-</dl>
-</div></blockquote>
+<div><p>initialize_forecast_exporter_xxx(filename, startdate, timestep, num_timesteps,   shape, num_ens_members, metadata, incremental=None)</p>
 <p>where xxx describes the file format. This function creates the file and writes 
 the metadata. The datasets are written by calling export_forecast_dataset, and 
 the file is closed by calling close_forecast_file.</p>
+<p>The arguments in the above are defined as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="22%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Argument</th>
+<th class="head">Type/values</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>filename</td>
+<td>str</td>
+<td>name of the output file</td>
+</tr>
+<tr class="row-odd"><td>startdate</td>
+<td>datetime.datetime</td>
+<td>start date of the forecast</td>
+</tr>
+<tr class="row-even"><td>timestep</td>
+<td>int</td>
+<td>time step of the forecast (minutes)</td>
+</tr>
+<tr class="row-odd"><td>n_timesteps</td>
+<td>int</td>
+<td>number of time steps in the forecast
+this argument is ignored if incremental is
+set to ‘timestep’.</td>
+</tr>
+<tr class="row-even"><td>shape</td>
+<td>tuple</td>
+<td>two-element tuple defining the shape
+(height,width) of the forecast grids</td>
+</tr>
+<tr class="row-odd"><td>n_ens_members</td>
+<td>int</td>
+<td>number of ensemble members in the forecast
+this argument is ignored if incremental is
+set to ‘member’</td>
+</tr>
+<tr class="row-even"><td>metadata</td>
+<td>dict</td>
+<td>metadata dictionary containing the
+projection,x1,x2,y1,y2 and unit attributes
+described in the documentation of
+pysteps.io.importers</td>
+</tr>
+<tr class="row-odd"><td>incremental</td>
+<td>{‘timestep’,
+‘member’}</td>
+<td>Allow incremental writing of datasets into
+the netCDF file
+the available options are:
+‘timestep’ = write a forecast or a
+forecast ensemble for a given time step
+‘member’ = write a forecast sequence
+for a given ensemble member</td>
+</tr>
+</tbody>
+</table>
+<p>The return value is a dictionary containing an exporter object. This can be 
+used with export_forecast_dataset to write datasets into the netCDF file.</p>
+</div></blockquote>
 <dl class="function">
 <dt id="pysteps.io.exporters.close_forecast_file">
 <code class="descclassname">pysteps.io.exporters.</code><code class="descname">close_forecast_file</code><span class="sig-paren">(</span><em>exporter</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.exporters.close_forecast_file" title="Permalink to this definition">¶</a></dt>
@@ -573,18 +644,8 @@ in this module.</p>
 
 <dl class="function">
 <dt id="pysteps.io.exporters.initialize_forecast_exporter_netcdf">
-<code class="descclassname">pysteps.io.exporters.</code><code class="descname">initialize_forecast_exporter_netcdf</code><span class="sig-paren">(</span><em>filename</em>, <em>startdate</em>, <em>timestep</em>, <em>num_timesteps</em>, <em>shape</em>, <em>num_ens_members</em>, <em>metadata</em>, <em>incremental=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.exporters.initialize_forecast_exporter_netcdf" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pysteps.io.exporters.</code><code class="descname">initialize_forecast_exporter_netcdf</code><span class="sig-paren">(</span><em>filename</em>, <em>startdate</em>, <em>timestep</em>, <em>n_timesteps</em>, <em>shape</em>, <em>n_ens_members</em>, <em>metadata</em>, <em>incremental=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.exporters.initialize_forecast_exporter_netcdf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize a netCDF forecast exporter.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>See the module docstring.</strong></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">See the module docstring.</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 </div>
@@ -709,6 +770,9 @@ CF 1.7 specification.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="oflow.html" title="Optical flow methods (pysteps.optflow)"
              >next</a> |</li>

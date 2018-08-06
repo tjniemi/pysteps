@@ -34,6 +34,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="verification.html" title="Forecast verification (pysteps.verification)"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.1 documentation</a> &#187;</li> 
@@ -47,6 +50,7 @@
             
   <div class="section" id="visualization-pysteps-visualization">
 <span id="pysteps-visualization"></span><h1>Visualization (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.visualization</span></code>)<a class="headerlink" href="#visualization-pysteps-visualization" title="Permalink to this headline">¶</a></h1>
+<p>Methods for plotting precipitation and motion fields.</p>
 <div class="section" id="module-pysteps.visualization.animations">
 <span id="pysteps-visualization-animations"></span><h2>pysteps.visualization.animations<a class="headerlink" href="#module-pysteps.visualization.animations" title="Permalink to this headline">¶</a></h2>
 <p>Functions to produce animations for pysteps.</p>
@@ -63,7 +67,16 @@
 <div><p>Three-dimensional array containing the time series of observed
 precipitation field.</p>
 </div></blockquote>
-<p><strong>nloops</strong> : int</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ax</strong> : fig axes</p>
+<blockquote>
+<div><p>Figure axes. Needed if one wants to add e.g. text inside the plot.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><p class="first"><strong>nloops</strong> : int</p>
 <blockquote>
 <div><p>Optional, the number of loops in the animation.</p>
 </div></blockquote>
@@ -152,14 +165,8 @@ in saving the individual frames).</p>
 <div><p>If set to True, save the individual frames to path_outputs.</p>
 </div></blockquote>
 <p><strong>path_outputs</strong> : string</p>
-<blockquote>
-<div><p>Path to folder where to save the frames.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ax</strong> : fig axes</p>
 <blockquote class="last">
-<div><p>Figure axes. Needed if one wants to add e.g. text inside the plot.</p>
+<div><p>Path to folder where to save the frames.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -184,7 +191,7 @@ in saving the individual frames).</p>
 </tr>
 </tbody>
 </table>
-<span class="target" id="module-pysteps.visualization.motionfields"></span><p>Functions to plot precipitation fields.</p>
+<span class="target" id="module-pysteps.visualization.motionfields"></span><p>Functions to plot motion fields.</p>
 <dl class="function">
 <dt id="pysteps.visualization.motionfields.quiver">
 <code class="descclassname">pysteps.visualization.motionfields.</code><code class="descname">quiver</code><span class="sig-paren">(</span><em>UV</em>, <em>geodata=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.visualization.motionfields.quiver" title="Permalink to this definition">¶</a></dt>
@@ -195,7 +202,7 @@ in saving the individual frames).</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>UV</strong> : array-like</p>
 <blockquote>
-<div><p>Array of shape (2, m,n) containing the input motion field.</p>
+<div><p>Array of shape (2,m,n) containing the input motion field.</p>
 </div></blockquote>
 <p><strong>geodata</strong> : dictionary</p>
 <blockquote>
@@ -415,7 +422,16 @@ Default : black</p>
 <blockquote>
 <div><p>Two-dimensional array containing the input precipitation field.</p>
 </div></blockquote>
-<p><strong>with_basemap</strong> : bool</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ax</strong> : fig axes</p>
+<blockquote>
+<div><p>Figure axes. Needed if one wants to add e.g. text inside the plot.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><p class="first"><strong>with_basemap</strong> : bool</p>
 <blockquote>
 <div><p>If True, plot a basemap.</p>
 </div></blockquote>
@@ -483,15 +499,9 @@ element in the data raster w.r.t. y-axis:
 Applicable if with_basemap is True.</p>
 </div></blockquote>
 <p><strong>drawlonlatlines</strong> : bool</p>
-<blockquote>
+<blockquote class="last">
 <div><p>If set to True, draw longitude and latitude lines. Applicable if 
 with_basemap is True.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ax</strong> : fig axes</p>
-<blockquote class="last">
-<div><p>Figure axes. Needed if one wants to add e.g. text inside the plot.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -565,6 +575,9 @@ tokens beginning with ‘+’.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="verification.html" title="Forecast verification (pysteps.verification)"
              >previous</a> |</li>

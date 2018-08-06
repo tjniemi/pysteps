@@ -35,6 +35,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="postprocessing.html" title="Post-processing of forecasts (pysteps.postproc)"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -51,6 +54,8 @@
             
   <div class="section" id="noise-generators-pysteps-noise">
 <span id="pysteps-noise"></span><h1>Noise generators (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.noise</span></code>)<a class="headerlink" href="#noise-generators-pysteps-noise" title="Permalink to this headline">¶</a></h1>
+<p>Methods for generating stochastic perturbations of 2d precipitation and velocity
+fields.</p>
 <div class="section" id="module-pysteps.noise.interface">
 <span id="pysteps-noise-interface"></span><h2>pysteps.noise.interface<a class="headerlink" href="#module-pysteps.noise.interface" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -100,7 +105,7 @@ filtering</td>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>bps</td>
-<td>The method of Bowler et al. (2006), where
+<td>The method described in [BPS2006], where
 time-dependent velocity perturbations are sampled
 from the exponential distribution</td>
 </tr>
@@ -406,7 +411,7 @@ Default : 0.1</p>
 </tbody>
 </table>
 <p class="rubric">References</p>
-<p><a class="reference internal" href="index.html#nbsg2017" id="id1">[5]</a></p>
+<p>[NBSG2017]</p>
 </dd></dl>
 
 <dl class="function">
@@ -469,10 +474,10 @@ Default : False</p>
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><a class="reference internal" href="#pysteps.noise.motion.initialize_bps" title="pysteps.noise.motion.initialize_bps"><code class="xref py py-obj docutils literal"><span class="pre">initialize_bps</span></code></a>(V,&nbsp;pixelsperkm,&nbsp;timestep[,&nbsp;…])</td>
-<td>Initialize the motion field perturbator described in Bowler et al.</td>
+<td>Initialize the motion field perturbator described in [BPS2006].</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#pysteps.noise.motion.generate_bps" title="pysteps.noise.motion.generate_bps"><code class="xref py py-obj docutils literal"><span class="pre">generate_bps</span></code></a>(perturbator,&nbsp;t)</td>
-<td>Generate a motion perturbation field by using the method described in  Bowler et al.</td>
+<td>Generate a motion perturbation field by using the method described in  [BPS2006].</td>
 </tr>
 </tbody>
 </table>
@@ -498,8 +503,7 @@ determined from the perturbator.</p>
 <dt id="pysteps.noise.motion.generate_bps">
 <code class="descclassname">pysteps.noise.motion.</code><code class="descname">generate_bps</code><span class="sig-paren">(</span><em>perturbator</em>, <em>t</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.noise.motion.generate_bps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a motion perturbation field by using the method described in 
-Bowler et al. 2006: STEPS: A probabilistic precipitation forecasting scheme 
-which merges an extrapolation nowcast with downscaled NWP.</p>
+[BPS2006].</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -523,17 +527,19 @@ vector perturbations, where m and n are determined from the perturbator.</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#pysteps.noise.motion.initialize_bps" title="pysteps.noise.motion.initialize_bps"><code class="xref py py-obj docutils literal"><span class="pre">pysteps.noise.motion.initialize_bps</span></code></a></p>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pysteps.noise.motion.initialize_bps">
 <code class="descclassname">pysteps.noise.motion.</code><code class="descname">initialize_bps</code><span class="sig-paren">(</span><em>V</em>, <em>pixelsperkm</em>, <em>timestep</em>, <em>p_pert_par=(10.88</em>, <em>0.23</em>, <em>-7.68)</em>, <em>p_pert_perp=(5.76</em>, <em>0.31</em>, <em>-2.72)</em>, <em>randstate=&lt;module 'numpy.random' from '/usr/lib/python3/dist-packages/numpy/random/__init__.py'&gt;</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.noise.motion.initialize_bps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize the motion field perturbator described in Bowler et al. 
-2006: STEPS: A probabilistic precipitation forecasting scheme which merges 
-an extrapolation nowcast with downscaled NWP. For simplicity, the bias 
-adjustment procedure described in the above reference has not been 
+<dd><p>Initialize the motion field perturbator described in [BPS2006]. 
+For simplicity, the bias adjustment procedure described there has not been 
 implemented. The perturbator generates a constant field whose magnitude 
-depends on lead time, see generate_motion_perturbations_bps.</p>
+depends on lead time.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -548,14 +554,14 @@ motion field to perturb.</p>
 <div><p>Tuple containing the parameters a,b and c for the standard deviation of 
 the perturbations in the direction parallel to the motion vectors. The 
 standard deviations are modeled by the function f_par(t) = a*t^b+c, where 
-t is lead time. The default values are taken from Bowler et al. 2006.</p>
+t is lead time. The default values are taken from [BPS2006].</p>
 </div></blockquote>
 <p><strong>p_pert_perp</strong> : tuple</p>
 <blockquote>
 <div><p>Tuple containing the parameters a,b and c for the standard deviation of 
 the perturbations in the direction perpendicular to the motion vectors. 
 The standard deviations are modeled by the function f_par(t) = a*t^b+c, 
-where t is lead time. The default values are taken from Bowler et al. 2006.</p>
+where t is lead time. The default values are taken from [BPS2006].</p>
 </div></blockquote>
 <p><strong>pixelsperkm</strong> : float</p>
 <blockquote>
@@ -584,20 +590,25 @@ generate_motion_perturbations_bps.</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#pysteps.noise.motion.generate_bps" title="pysteps.noise.motion.generate_bps"><code class="xref py py-obj docutils literal"><span class="pre">pysteps.noise.motion.generate_bps</span></code></a></p>
+</div>
 </dd></dl>
 
 </div>
 <div class="section" id="module-pysteps.noise.utils">
 <span id="pysteps-noise-utils"></span><h2>pysteps.noise.utils<a class="headerlink" href="#module-pysteps.noise.utils" title="Permalink to this headline">¶</a></h2>
-<p>Miscellaneous utility functions related to generating stochastic perturbations.</p>
+<p>Miscellaneous utility functions related to generation of stochastic perturbations.</p>
 <dl class="function">
 <dt id="pysteps.noise.utils.compute_noise_stddev_adjs">
 <code class="descclassname">pysteps.noise.utils.</code><code class="descname">compute_noise_stddev_adjs</code><span class="sig-paren">(</span><em>R</em>, <em>R_thr_1</em>, <em>R_thr_2</em>, <em>F</em>, <em>decomp_method</em>, <em>num_iter</em>, <em>conditional=True</em>, <em>num_workers=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.noise.utils.compute_noise_stddev_adjs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simulate the effect of applying a precipitation mask to a Gaussian noise 
+<dd><p>Apply a scale-dependent adjustment factor to the noise fields used in STEPS.</p>
+<p>Simulates the effect of applying a precipitation mask to a Gaussian noise 
 field obtained by the nonparametric filter method. The idea is to decompose 
-the masked noise field into a cascade and compare the standard deviations of 
-each level into those of the observed precipitation intensity field. This 
-gives correction factors for the standard deviations (Bowler et al. 2006). 
+the masked noise field into a cascade and compare the standard deviations 
+of each level into those of the observed precipitation intensity field. 
+This gives correction factors for the standard deviations [BPS2006]. 
 The calculations are done for n realizations of the noise field, and the 
 correction factors are calculated from the average values of the standard 
 deviations.</p>
@@ -641,8 +652,8 @@ of no precipitation.</p>
 </div></blockquote>
 <p><strong>num_workers</strong> : int</p>
 <blockquote>
-<div><p>The number of workers to use for parallel computation. Set to None to use 
-all available CPUs. Applicable if dask is enabled.</p>
+<div><p>The number of workers to use for parallel computation. Set to None to 
+use all available CPUs. Applicable if dask is enabled.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -692,6 +703,9 @@ cascade level.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="postprocessing.html" title="Post-processing of forecasts (pysteps.postproc)"
              >next</a> |</li>

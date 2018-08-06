@@ -35,6 +35,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="verification.html" title="Forecast verification (pysteps.verification)"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -51,6 +54,8 @@
             
   <div class="section" id="miscellaneous-utility-functions-pysteps-utils">
 <span id="pysteps-utils"></span><h1>Miscellaneous utility functions (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.utils</span></code>)<a class="headerlink" href="#miscellaneous-utility-functions-pysteps-utils" title="Permalink to this headline">¶</a></h1>
+<p>Utility functions for converting data values to/from different units and
+manipulating the dimensions of precipitation fields.</p>
 <div class="section" id="pysteps-utils-conversion">
 <h2>pysteps.utils.conversion<a class="headerlink" href="#pysteps-utils-conversion" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
@@ -62,7 +67,7 @@
 <tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.conversion.to_rainrate" title="pysteps.utils.conversion.to_rainrate"><code class="xref py py-obj docutils literal"><span class="pre">to_rainrate</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
 <td>Convert to rain rate [mm/h].</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.conversion.to_raindetph" title="pysteps.utils.conversion.to_raindetph"><code class="xref py py-obj docutils literal"><span class="pre">to_raindetph</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.conversion.to_raindepth" title="pysteps.utils.conversion.to_raindepth"><code class="xref py py-obj docutils literal"><span class="pre">to_raindepth</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
 <td>Convert to rain depth [mm].</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.conversion.to_reflectivity" title="pysteps.utils.conversion.to_reflectivity"><code class="xref py py-obj docutils literal"><span class="pre">to_reflectivity</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
@@ -70,10 +75,10 @@
 </tr>
 </tbody>
 </table>
-<span class="target" id="module-pysteps.utils.conversion"></span><p>Methods to convert physical units</p>
+<span class="target" id="module-pysteps.utils.conversion"></span><p>Methods for converting physical units.</p>
 <dl class="function">
-<dt id="pysteps.utils.conversion.to_raindetph">
-<code class="descclassname">pysteps.utils.conversion.</code><code class="descname">to_raindetph</code><span class="sig-paren">(</span><em>R</em>, <em>metadata</em>, <em>a=None</em>, <em>b=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.conversion.to_raindetph" title="Permalink to this definition">¶</a></dt>
+<dt id="pysteps.utils.conversion.to_raindepth">
+<code class="descclassname">pysteps.utils.conversion.</code><code class="descname">to_raindepth</code><span class="sig-paren">(</span><em>R</em>, <em>metadata</em>, <em>a=None</em>, <em>b=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.conversion.to_raindepth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to rain depth [mm].</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -428,7 +433,7 @@ reflectivity</td>
 </tr>
 </tbody>
 </table>
-<span class="target" id="module-pysteps.utils.transformation"></span><p>Methods to transform the data</p>
+<span class="target" id="module-pysteps.utils.transformation"></span><p>Methods for transforming data values.</p>
 <dl class="function">
 <dt id="pysteps.utils.transformation.boxcox_transform">
 <code class="descclassname">pysteps.utils.transformation.</code><code class="descname">boxcox_transform</code><span class="sig-paren">(</span><em>R</em>, <em>metadata=None</em>, <em>Lambda=None</em>, <em>threshold=None</em>, <em>zerovalue=None</em>, <em>inverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.transformation.boxcox_transform" title="Permalink to this definition">¶</a></dt>
@@ -564,6 +569,9 @@ If None, the threshold contained in metadata is used.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="verification.html" title="Forecast verification (pysteps.verification)"
              >next</a> |</li>
