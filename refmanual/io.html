@@ -4,30 +4,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Input/output routines (pysteps.io) &#8212; pysteps 0.1 documentation</title>
+    <title>Input/output routines (pysteps.io) &#8212; pysteps 0.2 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Optical flow methods (pysteps.optflow)" href="oflow.html" />
-    <link rel="prev" title="Nowcasting methods (pysteps.nowcasts)" href="nowcasting.html" /> 
-  </head>
-  <body>
+    <link rel="next" title="Optical flow methods (pysteps.motion)" href="motion.html" />
+    <link rel="prev" title="Nowcasting methods (pysteps.nowcasts)" href="nowcasts.html" /> 
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -38,12 +30,12 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="oflow.html" title="Optical flow methods (pysteps.optflow)"
+          <a href="motion.html" title="Optical flow methods (pysteps.motion)"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="nowcasting.html" title="Nowcasting methods (pysteps.nowcasts)"
+          <a href="nowcasts.html" title="Nowcasting methods (pysteps.nowcasts)"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -53,7 +45,7 @@
           <div class="body" role="main">
             
   <div class="section" id="input-output-routines-pysteps-io">
-<span id="pysteps-io"></span><h1>Input/output routines (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.io</span></code>)<a class="headerlink" href="#input-output-routines-pysteps-io" title="Permalink to this headline">¶</a></h1>
+<span id="pysteps-io"></span><h1>Input/output routines (<code class="xref py py-mod docutils literal notranslate"><span class="pre">pysteps.io</span></code>)<a class="headerlink" href="#input-output-routines-pysteps-io" title="Permalink to this headline">¶</a></h1>
 <p>Methods for browsing data archives, reading 2d precipitation fields and writing
 forecasts into files.</p>
 <div class="section" id="module-pysteps.io.interface">
@@ -66,9 +58,9 @@ forecasts into files.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
-<blockquote>
-<div><p>Name of the method. The available options are:</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first">Name of the method. The available options are:</p>
 <p>Importers:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -91,7 +83,14 @@ containing precipitation intensity composites</td>
 </tr>
 <tr class="row-even"><td>mch_gif</td>
 <td>GIF files in the MeteoSwiss archive containing
-precipitation intensity composites (mm/h)</td>
+precipitation composites</td>
+</tr>
+<tr class="row-odd"><td>mch_hdf5</td>
+<td>HDF5 file format used by MeteoSiss</td>
+</tr>
+<tr class="row-even"><td>mch_metranet</td>
+<td>metranet files in the MeteoSwiss archive containing
+precipitation composites</td>
 </tr>
 <tr class="row-odd"><td>odim_hdf5</td>
 <td>ODIM HDF5 file format used by Eumetnet/OPERA</td>
@@ -99,7 +98,7 @@ precipitation intensity composites (mm/h)</td>
 </tbody>
 </table>
 <p>Exporters:</p>
-<table border="1" class="docutils">
+<table border="1" class="last docutils">
 <colgroup>
 <col width="19%" />
 <col width="81%" />
@@ -115,11 +114,11 @@ precipitation intensity composites (mm/h)</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
-<p><strong>type</strong> : str</p>
-<blockquote class="last">
-<div><p>Type of the method. The available options are ‘importer’ and ‘exporter’.</p>
-</div></blockquote>
+</dd>
+<dt><strong>type</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Type of the method. The available options are ‘importer’ and ‘exporter’.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -138,50 +137,46 @@ precipitation intensity composites (mm/h)</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>date</strong> : datetime.datetime</p>
-<blockquote>
-<div><p>The given date.</p>
-</div></blockquote>
-<p><strong>root_path</strong> : str</p>
-<blockquote>
-<div><p>The root path to search the input files.</p>
-</div></blockquote>
-<p><strong>path_fmt</strong> : str</p>
-<blockquote>
-<div><p>Path format. It may consist of directory names separated by ‘/’ and 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>date</strong> <span class="classifier-delimiter">:</span> <span class="classifier">datetime.datetime</span></dt>
+<dd><p class="first last">The given date.</p>
+</dd>
+<dt><strong>root_path</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The root path to search the input files.</p>
+</dd>
+<dt><strong>path_fmt</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Path format. It may consist of directory names separated by ‘/’ and
 date/time specifiers beginning with ‘%’ (e.g. %Y/%m/%d).</p>
-</div></blockquote>
-<p><strong>fn_pattern</strong> : str</p>
-<blockquote>
-<div><p>The name pattern of the input files without extension. The pattern can 
+</dd>
+<dt><strong>fn_pattern</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The name pattern of the input files without extension. The pattern can
 contain time specifiers (e.g. %H, %M and %S).</p>
-</div></blockquote>
-<p><strong>fn_ext</strong> : str</p>
-<blockquote>
-<div><p>Extension of the input files.</p>
-</div></blockquote>
-<p><strong>timestep</strong> : float</p>
-<blockquote>
-<div><p>Time step between consecutive input files (minutes).</p>
-</div></blockquote>
-<p><strong>num_prev_files</strong> : int</p>
-<blockquote>
-<div><p>Optional, number of previous files to find before the given timestamp.</p>
-</div></blockquote>
-<p><strong>num_next_files</strong> : int</p>
-<blockquote>
-<div><p>Optional, number of future files to find after the given timestamp.</p>
-</div></blockquote>
+</dd>
+<dt><strong>fn_ext</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Extension of the input files.</p>
+</dd>
+<dt><strong>timestep</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Time step between consecutive input files (minutes).</p>
+</dd>
+<dt><strong>num_prev_files</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Optional, number of previous files to find before the given timestamp.</p>
+</dd>
+<dt><strong>num_next_files</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Optional, number of future files to find after the given timestamp.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : tuple</p>
-<blockquote class="last">
-<div><p>If num_prev_files=0 and num_next_files=0, return a pair containing the 
-found file name and the corresponding timestamp as a datetime.datetime 
-object. Otherwise, return a tuple of two lists, the first one for the 
-file names and the second one for the correspondign timestemps. The lists 
-are sorted in ascending order with respect to timestamp.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">If num_prev_files=0 and num_next_files=0, return a pair containing the
+found file name and the corresponding timestamp as a datetime.datetime
+object. Otherwise, return a tuple of two lists, the first one for the
+file names and the second one for the corresponding timestemps. The lists
+are sorted in ascending order with respect to timestamp. A None value is
+assigned if a file name corresponding to a given timestamp is not found.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -197,16 +192,16 @@ are sorted in ascending order with respect to timestamp.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.io.importers.import_bom_rf3" title="pysteps.io.importers.import_bom_rf3"><code class="xref py py-obj docutils literal"><span class="pre">import_bom_rf3</span></code></a>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.io.importers.import_bom_rf3" title="pysteps.io.importers.import_bom_rf3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bom_rf3</span></code></a>(filename,&nbsp;**kwargs)</td>
 <td>Import a NetCDF radar rainfall product from the BoM Rainfields3.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.io.importers.import_fmi_pgm" title="pysteps.io.importers.import_fmi_pgm"><code class="xref py py-obj docutils literal"><span class="pre">import_fmi_pgm</span></code></a>(filename,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.io.importers.import_fmi_pgm" title="pysteps.io.importers.import_fmi_pgm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_fmi_pgm</span></code></a>(filename,&nbsp;**kwargs)</td>
 <td>Import a 8-bit PGM radar reflectivity composite from the FMI archive.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.io.importers.import_mch_gif" title="pysteps.io.importers.import_mch_gif"><code class="xref py py-obj docutils literal"><span class="pre">import_mch_gif</span></code></a>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.io.importers.import_mch_gif" title="pysteps.io.importers.import_mch_gif"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mch_gif</span></code></a>(filename,&nbsp;**kwargs)</td>
 <td>Import a 8-bit gif radar reflectivity composite from the MeteoSwiss archive.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.io.importers.import_odim_hdf5" title="pysteps.io.importers.import_odim_hdf5"><code class="xref py py-obj docutils literal"><span class="pre">import_odim_hdf5</span></code></a>(filename,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.io.importers.import_odim_hdf5" title="pysteps.io.importers.import_odim_hdf5"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_odim_hdf5</span></code></a>(filename,&nbsp;**kwargs)</td>
 <td>Read a precipitation field (and optionally the quality field) from a HDF5 file conforming to the ODIM specification.</td>
 </tr>
 </tbody>
@@ -298,18 +293,20 @@ unit, transformation and accutime of the data.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Name of the file to import.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Name of the file to import.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : tuple</p>
-<blockquote class="last">
-<div><p>A three-element tuple containing the rainfall field in mm/h imported
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">A three-element tuple containing the rainfall field in mm/h imported
 from the Bureau RF3 netcdf, the quality field and the metadata. The
 quality field is currently set to None.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -324,25 +321,28 @@ quality field is currently set to None.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Name of the file to import.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Name of the file to import.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : tuple</p>
-<blockquote>
-<div><p>A three-element tuple containing the reflectivity composite in dBZ
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">A three-element tuple containing the reflectivity composite in dBZ
 and the associated quality field and metadata. The quality field is
 currently set to None.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body"><p class="first"><strong>gzipped</strong> : bool</p>
-<blockquote class="last">
-<div><p>If True, the input file is treated as a compressed gzip file.</p>
-</div></blockquote>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>gzipped</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">If True, the input file is treated as a compressed gzip file.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -358,25 +358,27 @@ archive.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Name of the file to import.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Name of the file to import.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : tuple</p>
-<blockquote>
-<div><p>A three-element tuple containing the precipitation field in mm/h imported
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">A three-element tuple containing the precipitation field in mm/h imported
 from a MeteoSwiss gif file and the associated quality field and metadata.
 The quality field is currently set to None.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body"><p class="first"><strong>product</strong> : string</p>
-<blockquote class="last">
-<div><p>The name of the MeteoSwiss QPE product:</p>
-<table border="1" class="docutils">
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>product</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">The name of the MeteoSwiss QPE product:</p>
+<table border="1" class="last docutils">
 <colgroup>
 <col width="18%" />
 <col width="82%" />
@@ -388,14 +390,130 @@ The quality field is currently set to None.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>AQC</td>
-<td>AQUIRE</td>
+<td>Acquire</td>
 </tr>
-<tr class="row-odd"><td>RZC</td>
-<td>PRECIP</td>
+<tr class="row-odd"><td>CPC</td>
+<td>CombiPrecip</td>
+</tr>
+<tr class="row-even"><td>RZC</td>
+<td>Precip</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
+</dd>
+<dt><strong>unit</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">the physical unit of the data: ‘mm/h’, ‘mm’ or ‘dBZ’</p>
+</dd>
+<dt><strong>accutime</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">the accumulation time in minutes of the data</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.io.importers.import_mch_hdf5">
+<code class="descclassname">pysteps.io.importers.</code><code class="descname">import_mch_hdf5</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.importers.import_mch_hdf5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a precipitation field (and optionally the quality field) from a HDF5
+file conforming to the ODIM specification.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Name of the file to import.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">A three-element tuple containing the OPERA product for the requested
+quantity and the associated quality field and metadata. The quality
+field is read from the file if it contains a dataset whose quantity
+identifier is ‘QIND’.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>qty</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{‘RATE’, ‘ACRR’, ‘DBZH’}</span></dt>
+<dd><p class="first last">The quantity to read from the file. The currently supported identitiers
+are: ‘RATE’=instantaneous rain rate (mm/h), ‘ACRR’=hourly rainfall
+accumulation (mm) and ‘DBZH’=max-reflectivity (dBZ). The default value
+is ‘RATE’.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.io.importers.import_mch_metranet">
+<code class="descclassname">pysteps.io.importers.</code><code class="descname">import_mch_metranet</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.importers.import_mch_metranet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import a 8-bit bin radar reflectivity composite from the MeteoSwiss
+archive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Name of the file to import.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">A three-element tuple containing the precipitation field in mm/h imported
+from a MeteoSwiss gif file and the associated quality field and metadata.
+The quality field is currently set to None.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>product</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first">The name of the MeteoSwiss QPE product:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Product</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>AQC</td>
+<td>Acquire</td>
+</tr>
+<tr class="row-odd"><td>CPC</td>
+<td>CombiPrecip</td>
+</tr>
+<tr class="row-even"><td>RZC</td>
+<td>Precip</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><strong>unit</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">the physical unit of the data: ‘mm/h’, ‘mm’ or ‘dBZ’</p>
+</dd>
+<dt><strong>accutime</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">the accumulation time in minutes of the data</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -411,29 +529,32 @@ file conforming to the ODIM specification.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
-<blockquote>
-<div><p>Name of the file to import.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Name of the file to import.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : tuple</p>
-<blockquote>
-<div><p>A three-element tuple containing the OPERA product for the requested
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">A three-element tuple containing the OPERA product for the requested
 quantity and the associated quality field and metadata. The quality
 field is read from the file if it contains a dataset whose quantity
 identifier is ‘QIND’.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body"><p class="first"><strong>qty</strong> : {‘RATE’, ‘ACRR’, ‘DBZH’}</p>
-<blockquote class="last">
-<div><p>The quantity to read from the file. The currently supported identitiers
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>qty</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{‘RATE’, ‘ACRR’, ‘DBZH’}</span></dt>
+<dd><p class="first last">The quantity to read from the file. The currently supported identitiers
 are: ‘RATE’=instantaneous rain rate (mm/h), ‘ACRR’=hourly rainfall
 accumulation (mm) and ‘DBZH’=max-reflectivity (dBZ). The default value
 is ‘RATE’.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -447,30 +568,35 @@ is ‘RATE’.</p>
 <dl class="function">
 <dt id="pysteps.io.readers.read_timeseries">
 <code class="descclassname">pysteps.io.readers.</code><code class="descname">read_timeseries</code><span class="sig-paren">(</span><em>inputfns</em>, <em>importer</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.readers.read_timeseries" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read a list of input files using io tools and stack them into a 3d array.</p>
+<dd><p>Read a time series of input files using the methods implemented in the 
+importers module and stack them into a 3d array of shape (num_timesteps, 
+height, width).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>inputfns</strong> : list</p>
-<blockquote>
-<div><p>List of input files returned by any function implemented in archive.</p>
-</div></blockquote>
-<p><strong>importer</strong> : function</p>
-<blockquote>
-<div><p>Any function implemented in importers.</p>
-</div></blockquote>
-<p><strong>kwargs</strong> : dict</p>
-<blockquote>
-<div><p>Optional keyword arguments for the importer.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>inputfns</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">Input files returned by a function implemented in the archive module.</p>
+</dd>
+<dt><strong>importer</strong> <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd><p class="first last">A function implemented in the importers module.</p>
+</dd>
+<dt><strong>kwargs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">Optional keyword arguments for the importer.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : tuple</p>
-<blockquote class="last">
-<div><p>A three-element tuple containing the precipitation fields read, the quality fields,
-and associated metadata.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">A three-element tuple containing the read data and quality rasters and
+associated metadata. If an input file name is None, the corresponding
+precipitation and quality fields are filled with nan values. If all
+input file names are None or if the length of the file name list is
+zero, a three-element tuple containing None values is returned.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -486,25 +612,25 @@ and associated metadata.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.io.exporters.initialize_forecast_exporter_netcdf" title="pysteps.io.exporters.initialize_forecast_exporter_netcdf"><code class="xref py py-obj docutils literal"><span class="pre">initialize_forecast_exporter_netcdf</span></code></a>(…[,&nbsp;…])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.io.exporters.initialize_forecast_exporter_netcdf" title="pysteps.io.exporters.initialize_forecast_exporter_netcdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initialize_forecast_exporter_netcdf</span></code></a>(…[,&nbsp;…])</td>
 <td>Initialize a netCDF forecast exporter.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.io.exporters.export_forecast_dataset" title="pysteps.io.exporters.export_forecast_dataset"><code class="xref py py-obj docutils literal"><span class="pre">export_forecast_dataset</span></code></a>(F,&nbsp;exporter)</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.io.exporters.export_forecast_dataset" title="pysteps.io.exporters.export_forecast_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_forecast_dataset</span></code></a>(F,&nbsp;exporter)</td>
 <td>Write a forecast array into a file.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.io.exporters.close_forecast_file" title="pysteps.io.exporters.close_forecast_file"><code class="xref py py-obj docutils literal"><span class="pre">close_forecast_file</span></code></a>(exporter)</td>
-<td>Finish writing forecasts and close the file associated with a forecast  exporter.</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.io.exporters.close_forecast_file" title="pysteps.io.exporters.close_forecast_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close_forecast_file</span></code></a>(exporter)</td>
+<td>Finish writing forecasts and close the file associated with a forecast exporter.</td>
 </tr>
 </tbody>
 </table>
-<span class="target" id="module-pysteps.io.exporters"></span><p>Methods for writing forecasts of 2d precipitation fields into various file 
+<span class="target" id="module-pysteps.io.exporters"></span><p>Methods for writing forecasts of 2d precipitation fields into various file
 formats.</p>
-<p>Each exporter method in this module has its own initialization function that 
+<p>Each exporter method in this module has its own initialization function that
 implements the following interface:</p>
 <blockquote>
 <div><p>initialize_forecast_exporter_xxx(filename, startdate, timestep, num_timesteps,   shape, num_ens_members, metadata, incremental=None)</p>
-<p>where xxx describes the file format. This function creates the file and writes 
-the metadata. The datasets are written by calling export_forecast_dataset, and 
+<p>where xxx describes the file format. This function creates the file and writes
+the metadata. The datasets are written by calling export_forecast_dataset, and
 the file is closed by calling close_forecast_file.</p>
 <p>The arguments in the above are defined as follows:</p>
 <table border="1" class="docutils">
@@ -569,23 +695,24 @@ for a given ensemble member</td>
 </tr>
 </tbody>
 </table>
-<p>The return value is a dictionary containing an exporter object. This can be 
+<p>The return value is a dictionary containing an exporter object. This can be
 used with export_forecast_dataset to write datasets into the netCDF file.</p>
 </div></blockquote>
 <dl class="function">
 <dt id="pysteps.io.exporters.close_forecast_file">
 <code class="descclassname">pysteps.io.exporters.</code><code class="descname">close_forecast_file</code><span class="sig-paren">(</span><em>exporter</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.exporters.close_forecast_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finish writing forecasts and close the file associated with a forecast 
+<dd><p>Finish writing forecasts and close the file associated with a forecast
 exporter.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>exporter</strong> : dict</p>
-<blockquote class="last">
-<div><p>An exporter object created with any initialization method implemented 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>exporter</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">An exporter object created with any initialization method implemented
 in this module.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -595,25 +722,24 @@ in this module.</p>
 <dl class="function">
 <dt id="pysteps.io.exporters.export_forecast_dataset">
 <code class="descclassname">pysteps.io.exporters.</code><code class="descname">export_forecast_dataset</code><span class="sig-paren">(</span><em>F</em>, <em>exporter</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.exporters.export_forecast_dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write a forecast array into a file. The written dataset has dimensions 
-(num_ens_members,num_timesteps,shape[0],shape[1]), where shape refers to 
-the shape of the two-dimensional forecast grids. If the exporter was 
-initialized with incremental!=None, the array is appended to the existing 
+<dd><p>Write a forecast array into a file. The written dataset has dimensions
+(num_ens_members,num_timesteps,shape[0],shape[1]), where shape refers to
+the shape of the two-dimensional forecast grids. If the exporter was
+initialized with incremental!=None, the array is appended to the existing
 dataset either along the ensemble member or time axis.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>exporter</strong> : dict</p>
-<blockquote>
-<div><p>An exporter object created with any initialization method implemented 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>exporter</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">An exporter object created with any initialization method implemented
 in this module.</p>
-</div></blockquote>
-<p><strong>F</strong> : array_like</p>
-<blockquote class="last">
-<div><p>The array to write. The required shape depends on the choice of the 
+</dd>
+<dt><strong>F</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first">The array to write. The required shape depends on the choice of the
 ‘incremental’ parameter the exporter was initialized with:</p>
-<table border="1" class="docutils">
+<table border="1" class="last docutils">
 <colgroup>
 <col width="27%" />
 <col width="73%" />
@@ -635,7 +761,8 @@ in this module.</p>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -648,6 +775,12 @@ in this module.</p>
 <dd><p>Initialize a netCDF forecast exporter.</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="pysteps.io.exporters.initialize_forecast_exporter_odimhdf5">
+<code class="descclassname">pysteps.io.exporters.</code><code class="descname">initialize_forecast_exporter_odimhdf5</code><span class="sig-paren">(</span><em>filename</em>, <em>startdate</em>, <em>timestep</em>, <em>n_timesteps</em>, <em>shape</em>, <em>n_ens_members</em>, <em>metadata</em>, <em>incremental=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.exporters.initialize_forecast_exporter_odimhdf5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a ODIM HDF5 forecast exporter.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pysteps.io.nowcast_importers">
 <span id="pysteps-io-nowcast-importers"></span><h2>pysteps.io.nowcast_importers<a class="headerlink" href="#module-pysteps.io.nowcast_importers" title="Permalink to this headline">¶</a></h2>
@@ -657,7 +790,7 @@ in this module.</p>
 <div>import_xxx(filename, optional arguments)</div></blockquote>
 <p>where xxx is the name (or abbreviation) of the file format and filename is the
 name of the input file.</p>
-<p>The output of each method is a two-element tuple containing the nowcast array 
+<p>The output of each method is a two-element tuple containing the nowcast array
 and a metadata dictionary.</p>
 <p>The metadata dictionary contains the following mandatory key-value pairs:</p>
 <table border="1" class="docutils">
@@ -731,7 +864,7 @@ same unit, transformation and accutime of the data.</td>
 <dl class="function">
 <dt id="pysteps.io.nowcast_importers.import_netcdf_pysteps">
 <code class="descclassname">pysteps.io.nowcast_importers.</code><code class="descname">import_netcdf_pysteps</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.io.nowcast_importers.import_netcdf_pysteps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read a nowcast or a nowcast ensemble from a NetCDF file conforming to the 
+<dd><p>Read a nowcast or a nowcast ensemble from a NetCDF file conforming to the
 CF 1.7 specification.</p>
 </dd></dl>
 
@@ -745,19 +878,21 @@ CF 1.7 specification.</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="nowcasting.html"
-                        title="previous chapter">Nowcasting methods (<code class="docutils literal"><span class="pre">pysteps.nowcasts</span></code>)</a></p>
+  <p class="topless"><a href="nowcasts.html"
+                        title="previous chapter">Nowcasting methods (<code class="docutils literal notranslate"><span class="pre">pysteps.nowcasts</span></code>)</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="oflow.html"
-                        title="next chapter">Optical flow methods (<code class="docutils literal"><span class="pre">pysteps.optflow</span></code>)</a></p>
+  <p class="topless"><a href="motion.html"
+                        title="next chapter">Optical flow methods (<code class="docutils literal notranslate"><span class="pre">pysteps.motion</span></code>)</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -774,17 +909,17 @@ CF 1.7 specification.</p>
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="oflow.html" title="Optical flow methods (pysteps.optflow)"
+          <a href="motion.html" title="Optical flow methods (pysteps.motion)"
              >next</a> |</li>
         <li class="right" >
-          <a href="nowcasting.html" title="Nowcasting methods (pysteps.nowcasts)"
+          <a href="nowcasts.html" title="Nowcasting methods (pysteps.nowcasts)"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Seppo Pulkkinen, Daniele Nerini and Loris Foresti.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>
 </html>

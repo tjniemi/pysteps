@@ -4,30 +4,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Scale-based decomposition of precipitation fields (pysteps.cascade) &#8212; pysteps 0.1 documentation</title>
+    <title>Scale-based decomposition of precipitation fields (pysteps.cascade) &#8212; pysteps 0.2 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Noise generators (pysteps.noise)" href="noise.html" />
-    <link rel="prev" title="Advection-based extrapolation (pysteps.advection)" href="advection.html" /> 
-  </head>
-  <body>
+    <link rel="prev" title="Advection-based extrapolation (pysteps.extrapolation)" href="extrapolation.html" /> 
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -41,9 +33,9 @@
           <a href="noise.html" title="Noise generators (pysteps.noise)"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="advection.html" title="Advection-based extrapolation (pysteps.advection)"
+          <a href="extrapolation.html" title="Advection-based extrapolation (pysteps.extrapolation)"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -53,15 +45,15 @@
           <div class="body" role="main">
             
   <div class="section" id="scale-based-decomposition-of-precipitation-fields-pysteps-cascade">
-<span id="pysteps-cascade"></span><h1>Scale-based decomposition of precipitation fields (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.cascade</span></code>)<a class="headerlink" href="#scale-based-decomposition-of-precipitation-fields-pysteps-cascade" title="Permalink to this headline">¶</a></h1>
-<p>Methods for band-pass filtering and scale-based decomposition of 2d precipitation
-fields.</p>
+<span id="pysteps-cascade"></span><h1>Scale-based decomposition of precipitation fields (<code class="xref py py-mod docutils literal notranslate"><span class="pre">pysteps.cascade</span></code>)<a class="headerlink" href="#scale-based-decomposition-of-precipitation-fields-pysteps-cascade" title="Permalink to this headline">¶</a></h1>
+<p>Methods for constructing bandpass filters and decomposing 2d precipitation
+fields into different spatial scales.</p>
 <div class="section" id="module-pysteps.cascade.interface">
 <span id="pysteps-cascade-interface"></span><h2>pysteps.cascade.interface<a class="headerlink" href="#module-pysteps.cascade.interface" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="pysteps.cascade.interface.get_method">
 <code class="descclassname">pysteps.cascade.interface.</code><code class="descname">get_method</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.cascade.interface.get_method" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a callable function for the bandpass filter or decomposition method 
+<dd><p>Return a callable function for the bandpass filter or decomposition method
 corresponding to the given name.</p>
 <p>Filter methods:</p>
 <table border="1" class="docutils">
@@ -114,22 +106,22 @@ and a bandpass filter</td>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.cascade.bandpass_filters.filter_uniform" title="pysteps.cascade.bandpass_filters.filter_uniform"><code class="xref py py-obj docutils literal"><span class="pre">filter_uniform</span></code></a>(shape,&nbsp;n)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.cascade.bandpass_filters.filter_uniform" title="pysteps.cascade.bandpass_filters.filter_uniform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_uniform</span></code></a>(shape,&nbsp;n)</td>
 <td>A dummy filter with one frequency band covering the whole domain.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.cascade.bandpass_filters.filter_gaussian" title="pysteps.cascade.bandpass_filters.filter_gaussian"><code class="xref py py-obj docutils literal"><span class="pre">filter_gaussian</span></code></a>(shape,&nbsp;n[,&nbsp;l_0,&nbsp;…])</td>
-<td>Implements a set of Gaussian band-pass filters in logarithmic frequency  scale.</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.cascade.bandpass_filters.filter_gaussian" title="pysteps.cascade.bandpass_filters.filter_gaussian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_gaussian</span></code></a>(shape,&nbsp;n[,&nbsp;l_0,&nbsp;…])</td>
+<td>Implements a set of Gaussian bandpass filters in logarithmic frequency scale.</td>
 </tr>
 </tbody>
 </table>
-<span class="target" id="module-pysteps.cascade.bandpass_filters"></span><p>Implementations of bandpass filters for separating different spatial scales 
-from two-dimensional images in the frequency domain.</p>
+<span class="target" id="module-pysteps.cascade.bandpass_filters"></span><p>Bandpass filters for separating different spatial scales from two-dimensional
+images in the frequency domain.</p>
 <p>The methods in this module implement the following interface:</p>
 <blockquote>
 <div>filter_xxx(shape, n, optional arguments)</div></blockquote>
-<p>where shape is the shape of the input field, respectively, and n is the number 
+<p>where shape is the shape of the input field, respectively, and n is the number
 of frequency bands to use.</p>
-<p>The output of each filter function is a dictionary containing the following 
+<p>The output of each filter function is a dictionary containing the following
 key-value pairs:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -143,12 +135,12 @@ key-value pairs:</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>weights_1d</td>
-<td>2d array of shape (n, r) containing 1d filter weights
-for each frequency band k=1,2,…,n</td>
+<td>2d array of shape (n, r) containing 1d filter weights for
+each frequency band k=1,2,…,n</td>
 </tr>
 <tr class="row-odd"><td>weights_2d</td>
-<td>3d array of shape (n, M, N) containing the 2d filter
-weights for each frequency band k=1,2,…,n</td>
+<td>3d array of shape (n, M, int(N/2)+1) containing the 2d
+filter weights for each frequency band k=1,2,…,n</td>
 </tr>
 <tr class="row-even"><td>central_freqs</td>
 <td>1d array of shape n containing the central frequencies of
@@ -157,48 +149,46 @@ the filters</td>
 </tbody>
 </table>
 <p>where r = int(max(N, M)/2)+1</p>
-<p>The filter weights are assumed to be normalized so that for any Fourier 
+<p>The filter weights are assumed to be normalized so that for any Fourier
 wavenumber they sum to one.</p>
 <dl class="function">
 <dt id="pysteps.cascade.bandpass_filters.filter_gaussian">
 <code class="descclassname">pysteps.cascade.bandpass_filters.</code><code class="descname">filter_gaussian</code><span class="sig-paren">(</span><em>shape</em>, <em>n</em>, <em>l_0=3</em>, <em>gauss_scale=0.5</em>, <em>gauss_scale_0=0.5</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.cascade.bandpass_filters.filter_gaussian" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implements a set of Gaussian band-pass filters in logarithmic frequency 
+<dd><p>Implements a set of Gaussian bandpass filters in logarithmic frequency
 scale.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>shape</strong> : int or tuple</p>
-<blockquote>
-<div><p>The dimensions (height, width) of the input field. If shape is an int, it 
-assumes to be a square domain.</p>
-</div></blockquote>
-<p><strong>n</strong> : int</p>
-<blockquote>
-<div><p>The number of frequency bands to use. Must be greater than 2.</p>
-</div></blockquote>
-<p><strong>l_0</strong> : int</p>
-<blockquote>
-<div><p>Central frequency of the second band (the first band is always centered 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or tuple</span></dt>
+<dd><p class="first last">The dimensions (height, width) of the input field. If shape is an int,
+the domain is assumed to have square shape.</p>
+</dd>
+<dt><strong>n</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The number of frequency bands to use. Must be greater than 2.</p>
+</dd>
+<dt><strong>l_0</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Central frequency of the second band (the first band is always centered
 at zero).</p>
-</div></blockquote>
-<p><strong>gauss_scale</strong> : float</p>
-<blockquote>
-<div><p>Optional scaling prameter. Proportional to the standard deviation of the 
+</dd>
+<dt><strong>gauss_scale</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional scaling prameter. Proportional to the standard deviation of the
 Gaussian weight functions.</p>
-</div></blockquote>
-<p><strong>gauss_scale_0</strong> : float</p>
-<blockquote>
-<div><p>Optional scaling parameter for the Gaussian function corresponding to 
+</dd>
+<dt><strong>gauss_scale_0</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional scaling parameter for the Gaussian function corresponding to
 the first frequency band.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : dict</p>
-<blockquote class="last">
-<div><p>A dictionary containing the bandpass filters corresponding to the 
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">A dictionary containing the bandpass filters corresponding to the
 specified frequency bands.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -210,21 +200,21 @@ specified frequency bands.</p>
 <dl class="function">
 <dt id="pysteps.cascade.bandpass_filters.filter_uniform">
 <code class="descclassname">pysteps.cascade.bandpass_filters.</code><code class="descname">filter_uniform</code><span class="sig-paren">(</span><em>shape</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.cascade.bandpass_filters.filter_uniform" title="Permalink to this definition">¶</a></dt>
-<dd><p>A dummy filter with one frequency band covering the whole domain. The 
+<dd><p>A dummy filter with one frequency band covering the whole domain. The
 weights are set to one.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>shape</strong> : int or tuple</p>
-<blockquote>
-<div><p>The dimensions (height, width) of the input field. If shape is an int, 
-it assumes to be a square domain.</p>
-</div></blockquote>
-<p><strong>n</strong> : int</p>
-<blockquote class="last">
-<div><p>Not used. Needed for compatibility with the filter interface.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or tuple</span></dt>
+<dd><p class="first last">The dimensions (height, width) of the input field. If shape is an int,
+the domain is assumed to have square shape.</p>
+</dd>
+<dt><strong>n</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Not used. Needed for compatibility with the filter interface.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -234,14 +224,14 @@ it assumes to be a square domain.</p>
 </div>
 <div class="section" id="module-pysteps.cascade.decomposition">
 <span id="pysteps-cascade-decomposition"></span><h2>pysteps.cascade.decomposition<a class="headerlink" href="#module-pysteps.cascade.decomposition" title="Permalink to this headline">¶</a></h2>
-<p>Implementations of cascade decompositions for separating two-dimensional 
-images into multiple spatial scales.</p>
+<p>Methods for decomposing two-dimensional images into multiple spatial scales.</p>
 <p>The methods in this module implement the following interface:</p>
 <blockquote>
-<div>decomposition_xxx(X, filter, optional arguments)</div></blockquote>
-<p>where X is the input field and filter is a dictionary returned by a filter 
-method implemented in bandpass_filters.py. The output of each method is a 
-dictionary with the following key-value pairs:</p>
+<div>decomposition_xxx(X, filter, <a href="#id2"><span class="problematic" id="id3">**</span></a>kwargs)</div></blockquote>
+<p>where X is the input field and filter is a dictionary returned by a filter
+method implemented in bandpass_filters.py. Optional parameters can be passed in
+the keyword arguments. The output of each method is a dictionary with the
+following key-value pairs:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="25%" />
@@ -269,36 +259,42 @@ number of cascade levels and the input fields have shape
 <dl class="function">
 <dt id="pysteps.cascade.decomposition.decomposition_fft">
 <code class="descclassname">pysteps.cascade.decomposition.</code><code class="descname">decomposition_fft</code><span class="sig-paren">(</span><em>X</em>, <em>filter</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.cascade.decomposition.decomposition_fft" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decompose a 2d input field into multiple spatial scales by using the Fast 
+<dd><p>Decompose a 2d input field into multiple spatial scales by using the Fast
 Fourier Transform (FFT) and a bandpass filter.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>X</strong> : array_like</p>
-<blockquote>
-<div><p>Two-dimensional array containing the input field. All values are required 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>X</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Two-dimensional array containing the input field. All values are required
 to be finite.</p>
-</div></blockquote>
-<p><strong>filter</strong> : dict</p>
-<blockquote>
-<div><p>A filter returned by any method implemented in bandpass_filters.py.</p>
-</div></blockquote>
+</dd>
+<dt><strong>filter</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">A filter returned by a method implemented in bandpass_filters.py.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : ndarray</p>
-<blockquote>
-<div><p>A dictionary described in the module documentation. The parameter n is 
-determined from the filter (see bandpass_filters.py).</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><p class="first last">A dictionary described in the module documentation. The number of cascade
+levels is determined from the filter (see bandpass_filters.py).</p>
+</dd>
+</dl>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body"><p class="first"><strong>MASK</strong> : array_like</p>
-<blockquote class="last">
-<div><p>Optional mask to use for computing the statistics for the cascade levels. 
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>fft_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or tuple</span></dt>
+<dd><p class="first last">A string or a (function,kwargs) tuple defining the FFT method to use
+(see utils.fft.get_method). Defaults to “numpy”.</p>
+</dd>
+<dt><strong>MASK</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Optional mask to use for computing the statistics for the cascade levels.
 Pixels with MASK==False are excluded from the computations.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -315,19 +311,21 @@ Pixels with MASK==False are excluded from the computations.</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="advection.html"
-                        title="previous chapter">Advection-based extrapolation (<code class="docutils literal"><span class="pre">pysteps.advection</span></code>)</a></p>
+  <p class="topless"><a href="extrapolation.html"
+                        title="previous chapter">Advection-based extrapolation (<code class="docutils literal notranslate"><span class="pre">pysteps.extrapolation</span></code>)</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="noise.html"
-                        title="next chapter">Noise generators (<code class="docutils literal"><span class="pre">pysteps.noise</span></code>)</a></p>
+                        title="next chapter">Noise generators (<code class="docutils literal notranslate"><span class="pre">pysteps.noise</span></code>)</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -347,14 +345,14 @@ Pixels with MASK==False are excluded from the computations.</p>
           <a href="noise.html" title="Noise generators (pysteps.noise)"
              >next</a> |</li>
         <li class="right" >
-          <a href="advection.html" title="Advection-based extrapolation (pysteps.advection)"
+          <a href="extrapolation.html" title="Advection-based extrapolation (pysteps.extrapolation)"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Seppo Pulkkinen, Daniele Nerini and Loris Foresti.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>
 </html>

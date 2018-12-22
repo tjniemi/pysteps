@@ -4,30 +4,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Miscellaneous utility functions (pysteps.utils) &#8212; pysteps 0.1 documentation</title>
+    <title>Miscellaneous utility functions (pysteps.utils) &#8212; pysteps 0.2 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Forecast verification (pysteps.verification)" href="verification.html" />
     <link rel="prev" title="Time series modeling and analysis (pysteps.timeseries)" href="timeseries.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -43,7 +35,7 @@
         <li class="right" >
           <a href="timeseries.html" title="Time series modeling and analysis (pysteps.timeseries)"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -53,9 +45,9 @@
           <div class="body" role="main">
             
   <div class="section" id="miscellaneous-utility-functions-pysteps-utils">
-<span id="pysteps-utils"></span><h1>Miscellaneous utility functions (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.utils</span></code>)<a class="headerlink" href="#miscellaneous-utility-functions-pysteps-utils" title="Permalink to this headline">¶</a></h1>
-<p>Utility functions for converting data values to/from different units and
-manipulating the dimensions of precipitation fields.</p>
+<span id="pysteps-utils"></span><h1>Miscellaneous utility functions (<code class="xref py py-mod docutils literal notranslate"><span class="pre">pysteps.utils</span></code>)<a class="headerlink" href="#miscellaneous-utility-functions-pysteps-utils" title="Permalink to this headline">¶</a></h1>
+<p>Utility functions for converting data values to/from different units,
+manipulating the dimensions of precipitation fields and computing the FFT.</p>
 <div class="section" id="pysteps-utils-conversion">
 <h2>pysteps.utils.conversion<a class="headerlink" href="#pysteps-utils-conversion" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
@@ -64,13 +56,13 @@ manipulating the dimensions of precipitation fields.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.conversion.to_rainrate" title="pysteps.utils.conversion.to_rainrate"><code class="xref py py-obj docutils literal"><span class="pre">to_rainrate</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.conversion.to_rainrate" title="pysteps.utils.conversion.to_rainrate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_rainrate</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
 <td>Convert to rain rate [mm/h].</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.conversion.to_raindepth" title="pysteps.utils.conversion.to_raindepth"><code class="xref py py-obj docutils literal"><span class="pre">to_raindepth</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.conversion.to_raindepth" title="pysteps.utils.conversion.to_raindepth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_raindepth</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
 <td>Convert to rain depth [mm].</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.conversion.to_reflectivity" title="pysteps.utils.conversion.to_reflectivity"><code class="xref py py-obj docutils literal"><span class="pre">to_reflectivity</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.conversion.to_reflectivity" title="pysteps.utils.conversion.to_reflectivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_reflectivity</span></code></a>(R,&nbsp;metadata[,&nbsp;a,&nbsp;b])</td>
 <td>Convert to reflectivity [dBZ].</td>
 </tr>
 </tbody>
@@ -84,28 +76,27 @@ manipulating the dimensions of precipitation fields.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape to be (back-)transformed.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote>
-<div><p>The metadata dictionary contains all data-related information.</p>
-</div></blockquote>
-<p><strong>a,b</strong> : float</p>
-<blockquote>
-<div><p>Optional, the a and b coefficients of the Z-R relationship.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape to be (back-)transformed.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information.</p>
+</dd>
+<dt><strong>a,b</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional, the a and b coefficients of the Z-R relationship.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape containing the converted units.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote class="last">
-<div><p>The metadata with updated attributes.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape containing the converted units.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata with updated attributes.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -120,28 +111,27 @@ manipulating the dimensions of precipitation fields.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape to be (back-)transformed.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote>
-<div><p>The metadata dictionary contains all data-related information.</p>
-</div></blockquote>
-<p><strong>a,b</strong> : float</p>
-<blockquote>
-<div><p>Optional, the a and b coefficients of the Z-R relationship.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape to be (back-)transformed.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information.</p>
+</dd>
+<dt><strong>a,b</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional, the a and b coefficients of the Z-R relationship.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape containing the converted units.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote class="last">
-<div><p>The metadata with updated attributes.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape containing the converted units.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata with updated attributes.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -156,28 +146,27 @@ manipulating the dimensions of precipitation fields.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape to be (back-)transformed.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote>
-<div><p>The metadata dictionary contains all data-related information.</p>
-</div></blockquote>
-<p><strong>a,b</strong> : float</p>
-<blockquote>
-<div><p>Optional, the a and b coefficients of the Z-R relationship.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape to be (back-)transformed.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information.</p>
+</dd>
+<dt><strong>a,b</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional, the a and b coefficients of the Z-R relationship.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape containing the converted units.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote class="last">
-<div><p>The metadata with updated attributes.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape containing the converted units.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata with updated attributes.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -193,51 +182,95 @@ manipulating the dimensions of precipitation fields.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.dimension.aggregate_fields_time" title="pysteps.utils.dimension.aggregate_fields_time"><code class="xref py py-obj docutils literal"><span class="pre">aggregate_fields_time</span></code></a>(R,&nbsp;metadata,&nbsp;…[,&nbsp;method])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.dimension.aggregate_fields_time" title="pysteps.utils.dimension.aggregate_fields_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aggregate_fields_time</span></code></a>(R,&nbsp;metadata,&nbsp;…[,&nbsp;…])</td>
 <td>Aggregate fields in time.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.dimension.aggregate_fields" title="pysteps.utils.dimension.aggregate_fields"><code class="xref py py-obj docutils literal"><span class="pre">aggregate_fields</span></code></a>(R,&nbsp;window_size[,&nbsp;axis,&nbsp;method])</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.dimension.aggregate_fields" title="pysteps.utils.dimension.aggregate_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aggregate_fields</span></code></a>(R,&nbsp;window_size[,&nbsp;axis,&nbsp;method])</td>
 <td>Aggregate fields.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.dimension.square_domain" title="pysteps.utils.dimension.square_domain"><code class="xref py py-obj docutils literal"><span class="pre">square_domain</span></code></a>(R,&nbsp;metadata[,&nbsp;method,&nbsp;inverse])</td>
-<td>Either pad or crop the data to get a square domain.</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.dimension.square_domain" title="pysteps.utils.dimension.square_domain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">square_domain</span></code></a>(R,&nbsp;metadata[,&nbsp;method,&nbsp;inverse])</td>
+<td>Either pad or crop a field to obtain a square domain.</td>
 </tr>
 </tbody>
 </table>
-<span class="target" id="module-pysteps.utils.dimension"></span><p>Functions to manipualte array dimensions.</p>
+<span class="target" id="module-pysteps.utils.dimension"></span><p>Functions to manipulate array dimensions.</p>
 <dl class="function">
 <dt id="pysteps.utils.dimension.aggregate_fields">
-<code class="descclassname">pysteps.utils.dimension.</code><code class="descname">aggregate_fields</code><span class="sig-paren">(</span><em>R</em>, <em>window_size</em>, <em>axis=0</em>, <em>method='sum'</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.dimension.aggregate_fields" title="Permalink to this definition">¶</a></dt>
-<dd><p>Aggregate fields. 
+<code class="descclassname">pysteps.utils.dimension.</code><code class="descname">aggregate_fields</code><span class="sig-paren">(</span><em>R</em>, <em>window_size</em>, <em>axis=0</em>, <em>method='mean'</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.dimension.aggregate_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregate fields.
 It attemps to aggregate the given R axis in an integer number of sections of
 length = window_size.  If such a aggregation is not possible, an error is raised.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape containing the input fields.</p>
-</div></blockquote>
-<p><strong>window_size</strong> : int</p>
-<blockquote>
-<div><p>The length of the window that is used to aggregate the fields.</p>
-</div></blockquote>
-<p><strong>axis</strong> : int</p>
-<blockquote>
-<div><p>The axis where to perform the aggregation.</p>
-</div></blockquote>
-<p><strong>method</strong> : string</p>
-<blockquote>
-<div><p>Optional argument that specifies the operation to use to aggregate the values within the time
-window.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape containing the input fields.</p>
+</dd>
+<dt><strong>window_size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The length of the window that is used to aggregate the fields.</p>
+</dd>
+<dt><strong>axis</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The axis where to perform the aggregation.</p>
+</dd>
+<dt><strong>method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">Optional argument that specifies the operation to use to aggregate the values within the
+window. Default to mean operator.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outputarray</strong> : array-like</p>
-<blockquote class="last">
-<div><p>The new aggregated array of shape (k,m,n), where k = t/time_window</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>outputarray</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">The new aggregated array with shape[axis] = k, where k = R.shape[axis]/window_size</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.utils.dimension.aggregate_fields_space">
+<code class="descclassname">pysteps.utils.dimension.</code><code class="descname">aggregate_fields_space</code><span class="sig-paren">(</span><em>R</em>, <em>metadata</em>, <em>space_window_m</em>, <em>ignore_nan=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.dimension.aggregate_fields_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upscale fields in space.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of shape (m,n), (t,m,n) or (l,t,m,n) containing a single field or
+a time series of (ensemble) input fields.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information. It requires
+the keys “xpixelsize”, “ypixelsize” and “unit”.</p>
+</dd>
+<dt><strong>space_window_m</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float or None</span></dt>
+<dd><p class="first last">The length in meters of the space window that is used to upscale the fields.
+The space spanned by the m and n dimensions of R must be a multiple of
+space_window_m. If set to None, it returns a copy of the original R and
+metadata.</p>
+</dd>
+<dt><strong>ignore_nan</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">If True, ignore nan values.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>outputarray</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">The new array of aggregated fields of shape (k,j), (t,k,j) or (l,t,k,j),
+where k = m*delta/space_window_m and j = n*delta/space_window_m; delta is
+the grid size.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata with updated attributes.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -246,43 +279,83 @@ window.</p>
 
 <dl class="function">
 <dt id="pysteps.utils.dimension.aggregate_fields_time">
-<code class="descclassname">pysteps.utils.dimension.</code><code class="descname">aggregate_fields_time</code><span class="sig-paren">(</span><em>R</em>, <em>metadata</em>, <em>time_window_min</em>, <em>method='mean'</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.dimension.aggregate_fields_time" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pysteps.utils.dimension.</code><code class="descname">aggregate_fields_time</code><span class="sig-paren">(</span><em>R</em>, <em>metadata</em>, <em>time_window_min</em>, <em>ignore_nan=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.dimension.aggregate_fields_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Aggregate fields in time.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of shape (t,m,n) or (i,t,m,n) containing the input fields.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of shape (t,m,n) or (l,t,m,n) containing a time series of (ensemble)
+input fields.
 They must be evenly spaced in time.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote>
-<div><p>The metadata dictionary contains all data-related information.</p>
-</div></blockquote>
-<p><strong>time_window_min</strong> : float or None</p>
-<blockquote>
-<div><p>The length in minutes of the time window that is used to aggregate the fields.
-The total length of R must be a multiple of time_window_min.
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information. It requires
+the keys “timestamps” and “unit”.</p>
+</dd>
+<dt><strong>time_window_min</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float or None</span></dt>
+<dd><p class="first last">The length in minutes of the time window that is used to aggregate the fields.
+The time spanned by the t dimension of R must be a multiple of time_window_min.
 If set to None, it returns a copy of the original R and metadata.</p>
-</div></blockquote>
-<p><strong>method</strong> : string</p>
-<blockquote>
-<div><p>Optional argument that specifies the operation to use to aggregate the values within the time
-window.</p>
-</div></blockquote>
+</dd>
+<dt><strong>ignore_nan</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">If True, ignore nan values.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>outputarray</strong> : array-like</p>
-<blockquote>
-<div><p>The new array of aggregated precipitation fields of shape (k,m,n), where 
-k = int(t*delta/time_window_min)</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote class="last">
-<div><p>The metadata with updated attributes.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>outputarray</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">The new array of aggregated fields of shape (k,m,n) or (l,k,m,n), where
+k = t*delta/time_window_min and delta is the time interval between two
+successive timestamps.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata with updated attributes.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.utils.dimension.clip_domain">
+<code class="descclassname">pysteps.utils.dimension.</code><code class="descname">clip_domain</code><span class="sig-paren">(</span><em>R</em>, <em>metadata</em>, <em>extent=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.dimension.clip_domain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clip the field domain by geographical coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of shape (m,n) or (t,m,n) containing the input fields.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information.</p>
+</dd>
+<dt><strong>extent</strong> <span class="classifier-delimiter">:</span> <span class="classifier">scalars (left, right, bottom, top)</span></dt>
+<dd><p class="first last">The extent of the bounding box in data coordinates to be used to clip 
+the data.
+Note that the direction of the vertical axis and thus the default 
+values for top and bottom depend on origin. We follow the same 
+convention as in the imshow method of matplotlib:
+<a class="reference external" href="https://matplotlib.org/tutorials/intermediate/imshow_extent.html">https://matplotlib.org/tutorials/intermediate/imshow_extent.html</a></p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">the clipped array</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">the metadata with updated attributes.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -292,47 +365,86 @@ k = int(t*delta/time_window_min)</p>
 <dl class="function">
 <dt id="pysteps.utils.dimension.square_domain">
 <code class="descclassname">pysteps.utils.dimension.</code><code class="descname">square_domain</code><span class="sig-paren">(</span><em>R</em>, <em>metadata</em>, <em>method='pad'</em>, <em>inverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.dimension.square_domain" title="Permalink to this definition">¶</a></dt>
-<dd><p>Either pad or crop the data to get a square domain.</p>
+<dd><p>Either pad or crop a field to obtain a square domain.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of shape (m,n) or (t,m,n) containing the input fields.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote>
-<div><p>The metadata dictionary contains all data-related information.</p>
-</div></blockquote>
-<p><strong>method</strong> : string</p>
-<blockquote>
-<div><p>Either pad or crop. 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of shape (m,n) or (t,m,n) containing the input fields.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information.</p>
+</dd>
+<dt><strong>method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">Either pad or crop.
 If pad, an equal number of zeros is added to both ends of its shortest
 side in order to produce a square domain.
 If crop, an equal number of pixels is removed to both ends of its longest
-side in order to produce a square domain. 
-Note that the crop method is irreversible, while the pad method can be
-reversed with the unsquare_domain() method.</p>
-</div></blockquote>
-<p><strong>shape</strong> : 2-element tuple</p>
-<blockquote>
-<div><p>Necessary for the inverse method only, it is the original shape of the domain.</p>
-</div></blockquote>
-<p><strong>inverse</strong> : bool</p>
-<blockquote>
-<div><p>Perform the inverse method, possible only with the “pad” method</p>
-</div></blockquote>
+side in order to produce a square domain.
+Note that the crop method involves a loss of data.</p>
+</dd>
+<dt><strong>inverse</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Perform the inverse method to recover the original domain shape. After a
+crop, the inverse is performed by padding the field with zeros.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>the reshape dataset</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote class="last">
-<div><p>the metadata with updated attributes.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">the reshape dataset</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">the metadata with updated attributes.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="pysteps-utils-fft">
+<h2>pysteps.utils.fft<a class="headerlink" href="#pysteps-utils-fft" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.fft.get_method" title="pysteps.utils.fft.get_method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_method</span></code></a>(name)</td>
+<td>Return a callable function for the FFT method corresponding to the given name.</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-pysteps.utils.fft"></span><p>Interface module for different FFT methods.</p>
+<dl class="function">
+<dt id="pysteps.utils.fft.get_method">
+<code class="descclassname">pysteps.utils.fft.</code><code class="descname">get_method</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.fft.get_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a callable function for the FFT method corresponding to the given
+name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The name of the method. The available options are ‘numpy’, ‘scipy’ and 
+‘pyfftw’</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd><p class="first last">A two-element tuple containing the FFT module and a dictionary of 
+default keyword arguments for calling the FFT method. Each module 
+implements the numpy.fft interface.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -345,8 +457,9 @@ reversed with the unsquare_domain() method.</p>
 <dl class="function">
 <dt id="pysteps.utils.interface.get_method">
 <code class="descclassname">pysteps.utils.interface.</code><code class="descname">get_method</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.interface.get_method" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a callable function for the bandpass filter or decomposition method 
-corresponding to the given name.</p>
+<dd><p>Return a callable function for the utility method corresponding to the
+given name. For the FFT methods, the return value is a two-element tuple
+containing the function and a dictionary of keyword arguments.</p>
 <p>Conversion methods:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -365,7 +478,7 @@ corresponding to the given name.</p>
 <tr class="row-odd"><td>mm or raindepth</td>
 <td>convert to rain depth [mm]</td>
 </tr>
-<tr class="row-even"><td>dBZ or
+<tr class="row-even"><td>dbz or
 reflectivity</td>
 <td>convert to reflectivity [dBZ]</td>
 </tr>
@@ -383,11 +496,20 @@ reflectivity</td>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>dB or decibel</td>
+<tr class="row-even"><td>boxcox or box-cox</td>
+<td>one-parameter Box-Cox transform</td>
+</tr>
+<tr class="row-odd"><td>db or decibel</td>
 <td>transform to units of decibel</td>
 </tr>
-<tr class="row-odd"><td>BoxCox</td>
-<td>apply one-parameter Box-Cox transform</td>
+<tr class="row-even"><td>log</td>
+<td>log transform</td>
+</tr>
+<tr class="row-odd"><td>nqt</td>
+<td>Normal Quantile Transform</td>
+</tr>
+<tr class="row-even"><td>sqrt</td>
+<td>square-root transform</td>
 </tr>
 </tbody>
 </table>
@@ -403,11 +525,40 @@ reflectivity</td>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>aggregate</td>
+<tr class="row-even"><td>accumulate</td>
 <td>aggregate fields in time</td>
 </tr>
-<tr class="row-odd"><td>square</td>
+<tr class="row-odd"><td>clip</td>
+<td>resize the field domain by geographical coordinates</td>
+</tr>
+<tr class="row-even"><td>square</td>
 <td>either pad or crop the data to get a square domain</td>
+</tr>
+<tr class="row-odd"><td>upscale</td>
+<td>upscale the field</td>
+</tr>
+</tbody>
+</table>
+<p>FFT methods (wrappers to different implementations):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>numpy_fft</td>
+<td>numpy.fft</td>
+</tr>
+<tr class="row-odd"><td>scipy_fft</td>
+<td>scipy.fftpack</td>
+</tr>
+<tr class="row-even"><td>pyfftw_fft</td>
+<td>pyfftw.interfaces.numpy_fft</td>
 </tr>
 </tbody>
 </table>
@@ -422,61 +573,104 @@ reflectivity</td>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.transformation.dB_transform" title="pysteps.utils.transformation.dB_transform"><code class="xref py py-obj docutils literal"><span class="pre">dB_transform</span></code></a>(R[,&nbsp;metadata,&nbsp;threshold,&nbsp;…])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.transformation.dB_transform" title="pysteps.utils.transformation.dB_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dB_transform</span></code></a>(R[,&nbsp;metadata,&nbsp;threshold,&nbsp;…])</td>
 <td>Methods to transform to/from dB units.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.transformation.boxcox_transform" title="pysteps.utils.transformation.boxcox_transform"><code class="xref py py-obj docutils literal"><span class="pre">boxcox_transform</span></code></a>(R[,&nbsp;metadata,&nbsp;Lambda,&nbsp;…])</td>
-<td>The one-parameter Box–Cox transformation.</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.transformation.boxcox_transform" title="pysteps.utils.transformation.boxcox_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boxcox_transform</span></code></a>(R[,&nbsp;metadata,&nbsp;Lambda,&nbsp;…])</td>
+<td>The one-parameter Box-Cox transformation.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.transformation.boxcox_transform_test_lambdas" title="pysteps.utils.transformation.boxcox_transform_test_lambdas"><code class="xref py py-obj docutils literal"><span class="pre">boxcox_transform_test_lambdas</span></code></a>(R[,&nbsp;Lambdas,&nbsp;…])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.transformation.boxcox_transform_test_lambdas" title="pysteps.utils.transformation.boxcox_transform_test_lambdas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boxcox_transform_test_lambdas</span></code></a>(R[,&nbsp;Lambdas,&nbsp;…])</td>
 <td>Test and plot various lambdas for the Box-Cox transformation.</td>
 </tr>
 </tbody>
 </table>
 <span class="target" id="module-pysteps.utils.transformation"></span><p>Methods for transforming data values.</p>
 <dl class="function">
-<dt id="pysteps.utils.transformation.boxcox_transform">
-<code class="descclassname">pysteps.utils.transformation.</code><code class="descname">boxcox_transform</code><span class="sig-paren">(</span><em>R</em>, <em>metadata=None</em>, <em>Lambda=None</em>, <em>threshold=None</em>, <em>zerovalue=None</em>, <em>inverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.transformation.boxcox_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>The one-parameter Box–Cox transformation.</p>
+<dt id="pysteps.utils.transformation.NQ_transform">
+<code class="descclassname">pysteps.utils.transformation.</code><code class="descname">NQ_transform</code><span class="sig-paren">(</span><em>R</em>, <em>metadata=None</em>, <em>inverse=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.transformation.NQ_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>The normal quantile transformation. 
+Zero rain vales are set to zero in norm space.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape to be transformed.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote>
-<div><p>The metadata dictionary contains all data-related information.</p>
-</div></blockquote>
-<p><strong>Lambda</strong> : float</p>
-<blockquote>
-<div><p>Parameter lambda of the Box-Cox transformation.</p>
-</div></blockquote>
-<p><strong>threshold</strong> : float</p>
-<blockquote>
-<div><p>Optional value that is used for thresholding with the same units as R. 
-If None, the threshold contained in metadata is used.</p>
-</div></blockquote>
-<p><strong>zerovalue</strong> : float</p>
-<blockquote>
-<div><p>Optional value to be assigned to no rain pixels as defined by the threshold.</p>
-</div></blockquote>
-<p><strong>inverse</strong> : bool</p>
-<blockquote>
-<div><p>Optional, if set to True, it performs the inverse transform</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape to be transformed.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information.</p>
+</dd>
+<dt><strong>inverse</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Optional, if set to True, it performs the inverse transform</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape containing the (back-)transformed units.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote class="last">
-<div><p>The metadata with updated attributes.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape containing the (back-)transformed units.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata with updated attributes.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>a</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional offset fraction to be used; typically in (0,1).
+Default : 0., i.e. it spaces the points evenly in the uniform distribution</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.utils.transformation.boxcox_transform">
+<code class="descclassname">pysteps.utils.transformation.</code><code class="descname">boxcox_transform</code><span class="sig-paren">(</span><em>R</em>, <em>metadata=None</em>, <em>Lambda=None</em>, <em>threshold=None</em>, <em>zerovalue=None</em>, <em>inverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.transformation.boxcox_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>The one-parameter Box-Cox transformation.
+Default parameters will produce a log transform (i.e. Lambda=0).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape to be transformed.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information.</p>
+</dd>
+<dt><strong>Lambda</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Parameter lambda of the Box-Cox transformation.
+Default : 0</p>
+</dd>
+<dt><strong>threshold</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional value that is used for thresholding with the same units as R.
+If None, the threshold contained in metadata is used.</p>
+</dd>
+<dt><strong>zerovalue</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional value to be assigned to no rain pixels as defined by the threshold.</p>
+</dd>
+<dt><strong>inverse</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Optional, if set to True, it performs the inverse transform</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape containing the (back-)transformed units.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata with updated attributes.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -497,37 +691,69 @@ If None, the threshold contained in metadata is used.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape to be (back-)transformed.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote>
-<div><p>The metadata dictionary contains all data-related information.</p>
-</div></blockquote>
-<p><strong>threshold</strong> : float</p>
-<blockquote>
-<div><p>Optional value that is used for thresholding with the same units as R. 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape to be (back-)transformed.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information.</p>
+</dd>
+<dt><strong>threshold</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional value that is used for thresholding with the same units as R.
 If None, the threshold contained in metadata is used.</p>
-</div></blockquote>
-<p><strong>zerovalue</strong> : float</p>
-<blockquote>
-<div><p>Optional value to be assigned to no rain pixels as defined by the threshold.</p>
-</div></blockquote>
-<p><strong>inverse</strong> : bool</p>
-<blockquote>
-<div><p>Optional, if set to True, it performs the inverse transform</p>
-</div></blockquote>
+</dd>
+<dt><strong>zerovalue</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional value to be assigned to no rain pixels as defined by the threshold.</p>
+</dd>
+<dt><strong>inverse</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Optional, if set to True, it performs the inverse transform</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>R</strong> : array-like</p>
-<blockquote>
-<div><p>Array of any shape containing the (back-)transformed units.</p>
-</div></blockquote>
-<p><strong>metadata</strong> : dict</p>
-<blockquote class="last">
-<div><p>The metadata with updated attributes.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape containing the (back-)transformed units.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata with updated attributes.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.utils.transformation.sqrt_transform">
+<code class="descclassname">pysteps.utils.transformation.</code><code class="descname">sqrt_transform</code><span class="sig-paren">(</span><em>R</em>, <em>metadata=None</em>, <em>inverse=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.transformation.sqrt_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Square-root transform.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape to be transformed.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata dictionary contains all data-related information.</p>
+</dd>
+<dt><strong>inverse</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Optional, if set to True, it performs the inverse transform</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of any shape containing the (back-)transformed units.</p>
+</dd>
+<dt><strong>metadata</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">The metadata with updated attributes.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -545,18 +771,20 @@ If None, the threshold contained in metadata is used.</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="timeseries.html"
-                        title="previous chapter">Time series modeling and analysis (<code class="docutils literal"><span class="pre">pysteps.timeseries</span></code>)</a></p>
+                        title="previous chapter">Time series modeling and analysis (<code class="docutils literal notranslate"><span class="pre">pysteps.timeseries</span></code>)</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="verification.html"
-                        title="next chapter">Forecast verification (<code class="docutils literal"><span class="pre">pysteps.verification</span></code>)</a></p>
+                        title="next chapter">Forecast verification (<code class="docutils literal notranslate"><span class="pre">pysteps.verification</span></code>)</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -578,12 +806,12 @@ If None, the threshold contained in metadata is used.</p>
         <li class="right" >
           <a href="timeseries.html" title="Time series modeling and analysis (pysteps.timeseries)"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Seppo Pulkkinen, Daniele Nerini and Loris Foresti.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>
 </html>

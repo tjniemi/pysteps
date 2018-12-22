@@ -4,30 +4,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Post-processing of forecasts (pysteps.postproc) &#8212; pysteps 0.1 documentation</title>
+    <title>Post-processing of forecasts (pysteps.postprocessing) &#8212; pysteps 0.2 documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.1',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Time series modeling and analysis (pysteps.timeseries)" href="timeseries.html" />
     <link rel="prev" title="Noise generators (pysteps.noise)" href="noise.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -43,7 +35,7 @@
         <li class="right" >
           <a href="noise.html" title="Noise generators (pysteps.noise)"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -52,57 +44,147 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="post-processing-of-forecasts-pysteps-postproc">
-<span id="pysteps-postprocessing"></span><h1>Post-processing of forecasts (<code class="xref py py-mod docutils literal"><span class="pre">pysteps.postproc</span></code>)<a class="headerlink" href="#post-processing-of-forecasts-pysteps-postproc" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="post-processing-of-forecasts-pysteps-postprocessing">
+<span id="pysteps-postprocessing"></span><h1>Post-processing of forecasts (<code class="xref py py-mod docutils literal notranslate"><span class="pre">pysteps.postprocessing</span></code>)<a class="headerlink" href="#post-processing-of-forecasts-pysteps-postprocessing" title="Permalink to this headline">¶</a></h1>
 <p>Methods for post-processing of forecasts. Currently the module contains
 cumulative density function (CDF)-based matching between a forecast and the
-target distribution.</p>
-<div class="section" id="pysteps-postproc-probmatching">
-<h2>pysteps.postproc.probmatching<a class="headerlink" href="#pysteps-postproc-probmatching" title="Permalink to this headline">¶</a></h2>
+target distribution and computation of mean value and exceedance probabilities
+from forecast ensembles.</p>
+<div class="section" id="pysteps-postprocessing-ensemblestats">
+<h2>pysteps.postprocessing.ensemblestats<a class="headerlink" href="#pysteps-postprocessing-ensemblestats" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.postproc.probmatching.compute_empirical_cdf" title="pysteps.postproc.probmatching.compute_empirical_cdf"><code class="xref py py-obj docutils literal"><span class="pre">compute_empirical_cdf</span></code></a>(bin_edges,&nbsp;hist)</td>
-<td>Compute an empirical cumulative distribution function from the given  histogram.</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.postprocessing.ensemblestats.mean" title="pysteps.postprocessing.ensemblestats.mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean</span></code></a>(X[,&nbsp;ignore_nan,&nbsp;X_thr])</td>
+<td>Compute the mean value from a forecast ensemble field.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.postproc.probmatching.nonparam_match_empirical_cdf" title="pysteps.postproc.probmatching.nonparam_match_empirical_cdf"><code class="xref py py-obj docutils literal"><span class="pre">nonparam_match_empirical_cdf</span></code></a>(R,&nbsp;R_trg)</td>
-<td>Matches the empirical CDF of the initial array with the empirical CDF  of a target array.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.postproc.probmatching.pmm_init" title="pysteps.postproc.probmatching.pmm_init"><code class="xref py py-obj docutils literal"><span class="pre">pmm_init</span></code></a>(bin_edges_1,&nbsp;cdf_1,&nbsp;bin_edges_2,&nbsp;cdf_2)</td>
-<td>Initialize a probability matching method (PMM) object from binned  cumulative distribution functions (CDF).</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.postproc.probmatching.pmm_compute" title="pysteps.postproc.probmatching.pmm_compute"><code class="xref py py-obj docutils literal"><span class="pre">pmm_compute</span></code></a>(pmm,&nbsp;x)</td>
-<td>For a given PMM object and x-coordinate, compute the probability matched  value (i.e.</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.postprocessing.ensemblestats.excprob" title="pysteps.postprocessing.ensemblestats.excprob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">excprob</span></code></a>(X,&nbsp;X_thr[,&nbsp;ignore_nan])</td>
+<td>For a given forecast ensemble field, compute exceedance probabilities for the given intensity thresholds.</td>
 </tr>
 </tbody>
 </table>
-<span class="target" id="module-pysteps.postproc.probmatching"></span><p>Methods for matching the empirical probability distribution of two data sets.</p>
+<span class="target" id="module-pysteps.postprocessing.ensemblestats"></span><dl class="function">
+<dt id="pysteps.postprocessing.ensemblestats.excprob">
+<code class="descclassname">pysteps.postprocessing.ensemblestats.</code><code class="descname">excprob</code><span class="sig-paren">(</span><em>X</em>, <em>X_thr</em>, <em>ignore_nan=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postprocessing.ensemblestats.excprob" title="Permalink to this definition">¶</a></dt>
+<dd><p>For a given forecast ensemble field, compute exceedance probabilities
+for the given intensity thresholds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>X</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Array of shape (k,m,n,…) containing an k-member ensemble of forecasts
+with shape (m,n,…).</p>
+</dd>
+<dt><strong>X_thr</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float or a sequence of floats</span></dt>
+<dd><p class="first last">Intensity threshold(s) for which the exceedance probabilities are
+computed.</p>
+</dd>
+<dt><strong>ignore_nan</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">If True, ignore nan values.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><p class="first last">Array of shape (len(X_thr),m,n) containing the exceedance probabilities 
+for the given intensity thresholds. If len(X_thr)=1, the first dimension 
+is dropped.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="function">
-<dt id="pysteps.postproc.probmatching.compute_empirical_cdf">
-<code class="descclassname">pysteps.postproc.probmatching.</code><code class="descname">compute_empirical_cdf</code><span class="sig-paren">(</span><em>bin_edges</em>, <em>hist</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postproc.probmatching.compute_empirical_cdf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute an empirical cumulative distribution function from the given 
+<dt id="pysteps.postprocessing.ensemblestats.mean">
+<code class="descclassname">pysteps.postprocessing.ensemblestats.</code><code class="descname">mean</code><span class="sig-paren">(</span><em>X</em>, <em>ignore_nan=False</em>, <em>X_thr=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postprocessing.ensemblestats.mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the mean value from a forecast ensemble field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>X</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Array of shape (n_members,m,n) containing an ensemble of forecast
+fields of shape (m,n).</p>
+</dd>
+<dt><strong>ignore_nan</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">If True, ignore nan values.</p>
+</dd>
+<dt><strong>X_thr</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional threshold for computing the ensemble mean. Values below X_thr
+are ignored.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><p class="first last">Array of shape (m,n) containing the ensemble mean.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="pysteps-postprocessing-probmatching">
+<h2>pysteps.postprocessing.probmatching<a class="headerlink" href="#pysteps-postprocessing-probmatching" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.postprocessing.probmatching.compute_empirical_cdf" title="pysteps.postprocessing.probmatching.compute_empirical_cdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_empirical_cdf</span></code></a>(bin_edges,&nbsp;hist)</td>
+<td>Compute an empirical cumulative distribution function from the given histogram.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.postprocessing.probmatching.nonparam_match_empirical_cdf" title="pysteps.postprocessing.probmatching.nonparam_match_empirical_cdf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nonparam_match_empirical_cdf</span></code></a>(R,&nbsp;R_trg)</td>
+<td>Matches the empirical CDF of the initial array with the empirical CDF of a target array.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.postprocessing.probmatching.pmm_init" title="pysteps.postprocessing.probmatching.pmm_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pmm_init</span></code></a>(bin_edges_1,&nbsp;cdf_1,&nbsp;bin_edges_2,&nbsp;cdf_2)</td>
+<td>Initialize a probability matching method (PMM) object from binned cumulative distribution functions (CDF).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.postprocessing.probmatching.pmm_compute" title="pysteps.postprocessing.probmatching.pmm_compute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pmm_compute</span></code></a>(pmm,&nbsp;x)</td>
+<td>For a given PMM object and x-coordinate, compute the probability matched value (i.e.</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-pysteps.postprocessing.probmatching"></span><p>Methods for matching the empirical probability distribution of two data sets.</p>
+<dl class="function">
+<dt id="pysteps.postprocessing.probmatching.compute_empirical_cdf">
+<code class="descclassname">pysteps.postprocessing.probmatching.</code><code class="descname">compute_empirical_cdf</code><span class="sig-paren">(</span><em>bin_edges</em>, <em>hist</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postprocessing.probmatching.compute_empirical_cdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute an empirical cumulative distribution function from the given
 histogram.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>bin_edges</strong> : array_like</p>
-<blockquote>
-<div><p>Coordinates of left edges of the histogram bins.</p>
-</div></blockquote>
-<p><strong>hist</strong> : array_like</p>
-<blockquote>
-<div><p>Histogram counts for each bin.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>bin_edges</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Coordinates of left edges of the histogram bins.</p>
+</dd>
+<dt><strong>hist</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Histogram counts for each bin.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : ndarray</p>
-<blockquote class="last">
-<div><p>CDF values corresponding to the bin edges.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><p class="first last">CDF values corresponding to the bin edges.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -110,29 +192,30 @@ histogram.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pysteps.postproc.probmatching.nonparam_match_empirical_cdf">
-<code class="descclassname">pysteps.postproc.probmatching.</code><code class="descname">nonparam_match_empirical_cdf</code><span class="sig-paren">(</span><em>R</em>, <em>R_trg</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postproc.probmatching.nonparam_match_empirical_cdf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Matches the empirical CDF of the initial array with the empirical CDF 
-of a target array. Initial ranks are conserved, but empirical distribution 
+<dt id="pysteps.postprocessing.probmatching.nonparam_match_empirical_cdf">
+<code class="descclassname">pysteps.postprocessing.probmatching.</code><code class="descname">nonparam_match_empirical_cdf</code><span class="sig-paren">(</span><em>R</em>, <em>R_trg</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postprocessing.probmatching.nonparam_match_empirical_cdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Matches the empirical CDF of the initial array with the empirical CDF
+of a target array. Initial ranks are conserved, but empirical distribution
 matches the target one. Zero-pixels in initial array are conserved.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>R</strong> : array_like</p>
-<blockquote>
-<div><p>The initial array whose CDF is to be changed.</p>
-</div></blockquote>
-<p><strong>R_trg</strong> : array_like</p>
-<blockquote>
-<div><p>The target array whose CDF is to be matched.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">The initial array whose CDF is to be changed.</p>
+</dd>
+<dt><strong>R_trg</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">The target array whose CDF is to be matched.</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> : array_like</p>
-<blockquote class="last">
-<div><p>The new array.</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">The new array.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -140,23 +223,23 @@ matches the target one. Zero-pixels in initial array are conserved.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pysteps.postproc.probmatching.pmm_compute">
-<code class="descclassname">pysteps.postproc.probmatching.</code><code class="descname">pmm_compute</code><span class="sig-paren">(</span><em>pmm</em>, <em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postproc.probmatching.pmm_compute" title="Permalink to this definition">¶</a></dt>
-<dd><p>For a given PMM object and x-coordinate, compute the probability matched 
-value (i.e. the x-coordinate for which the target CDF has the same value as 
+<dt id="pysteps.postprocessing.probmatching.pmm_compute">
+<code class="descclassname">pysteps.postprocessing.probmatching.</code><code class="descname">pmm_compute</code><span class="sig-paren">(</span><em>pmm</em>, <em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postprocessing.probmatching.pmm_compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>For a given PMM object and x-coordinate, compute the probability matched
+value (i.e. the x-coordinate for which the target CDF has the same value as
 the source CDF).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pmm</strong> : dict</p>
-<blockquote>
-<div><p>A PMM object returned by pmm_init.</p>
-</div></blockquote>
-<p><strong>x</strong> : float</p>
-<blockquote class="last">
-<div><p>The coordinate for which to compute the probability matched value.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pmm</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">A PMM object returned by pmm_init.</p>
+</dd>
+<dt><strong>x</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The coordinate for which to compute the probability matched value.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -164,30 +247,95 @@ the source CDF).</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pysteps.postproc.probmatching.pmm_init">
-<code class="descclassname">pysteps.postproc.probmatching.</code><code class="descname">pmm_init</code><span class="sig-paren">(</span><em>bin_edges_1</em>, <em>cdf_1</em>, <em>bin_edges_2</em>, <em>cdf_2</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postproc.probmatching.pmm_init" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize a probability matching method (PMM) object from binned 
+<dt id="pysteps.postprocessing.probmatching.pmm_init">
+<code class="descclassname">pysteps.postprocessing.probmatching.</code><code class="descname">pmm_init</code><span class="sig-paren">(</span><em>bin_edges_1</em>, <em>cdf_1</em>, <em>bin_edges_2</em>, <em>cdf_2</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postprocessing.probmatching.pmm_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a probability matching method (PMM) object from binned
 cumulative distribution functions (CDF).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>bin_edges_1</strong> : array_like</p>
-<blockquote>
-<div><p>Coordinates of the left bin edges of the source cdf.</p>
-</div></blockquote>
-<p><strong>cdf_1</strong> : array_like</p>
-<blockquote>
-<div><p>Values of the source CDF at the bin edges.</p>
-</div></blockquote>
-<p><strong>bin_edges_2</strong> : array_like</p>
-<blockquote>
-<div><p>Coordinates of the left bin edges of the target cdf.</p>
-</div></blockquote>
-<p><strong>cdf_2</strong> : array_like</p>
-<blockquote class="last">
-<div><p>Values of the target CDF at the bin edges.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>bin_edges_1</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Coordinates of the left bin edges of the source cdf.</p>
+</dd>
+<dt><strong>cdf_1</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Values of the source CDF at the bin edges.</p>
+</dd>
+<dt><strong>bin_edges_2</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Coordinates of the left bin edges of the target cdf.</p>
+</dd>
+<dt><strong>cdf_2</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">Values of the target CDF at the bin edges.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.postprocessing.probmatching.shift_scale">
+<code class="descclassname">pysteps.postprocessing.probmatching.</code><code class="descname">shift_scale</code><span class="sig-paren">(</span><em>R</em>, <em>f</em>, <em>rain_fraction_trg</em>, <em>second_moment_trg</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.postprocessing.probmatching.shift_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find shift and scale that is needed to return the required second_moment
+and rain area. The optimization is performed with the Nelder-Mead algorithm
+available in scipy.
+It ssumes a forward transformation ln_rain = ln(rain)-ln(min_rain) if
+rain &gt; min_rain, else 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">The initial array to be shift and scaled.</p>
+</dd>
+<dt><strong>f</strong> <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
+<dd><p class="first last">The inverse transformation that is applied after the shift and scale.</p>
+</dd>
+<dt><strong>rain_fraction_trg</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The required rain fraction to be matched by shifting.</p>
+</dd>
+<dt><strong>second_moment_trg</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The required second moment to be matched by scaling.
+The second_moment is defined as second_moment = var + mean^2.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>shift</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The shift value that produces the required rain fraction.</p>
+</dd>
+<dt><strong>scale</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">The scale value that produces the required second_moment.</p>
+</dd>
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd><p class="first last">The shifted, scaled and back-transformed array.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>scale</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional initial value of the scale parameter for the Nelder-Mead optimisation.
+Typically, this would be the scale parameter estimated the previous time step.
+Default : 1.</p>
+</dd>
+<dt><strong>max_iterations</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Maximum allowed number of iterations and function evaluations.
+More details: <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.minimize-neldermead.html">https://docs.scipy.org/doc/scipy/reference/optimize.minimize-neldermead.html</a>
+Deafult: 100.</p>
+</dd>
+<dt><strong>tol</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Tolerance for termination.
+More details: <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/optimize.minimize-neldermead.html">https://docs.scipy.org/doc/scipy/reference/optimize.minimize-neldermead.html</a>
+Default: 0.05*second_moment_trg, i.e. terminate the search if the error
+is less than 5% since the second moment is a bit unstable.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -205,18 +353,20 @@ cumulative distribution functions (CDF).</p>
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="noise.html"
-                        title="previous chapter">Noise generators (<code class="docutils literal"><span class="pre">pysteps.noise</span></code>)</a></p>
+                        title="previous chapter">Noise generators (<code class="docutils literal notranslate"><span class="pre">pysteps.noise</span></code>)</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="timeseries.html"
-                        title="next chapter">Time series modeling and analysis (<code class="docutils literal"><span class="pre">pysteps.timeseries</span></code>)</a></p>
+                        title="next chapter">Time series modeling and analysis (<code class="docutils literal notranslate"><span class="pre">pysteps.timeseries</span></code>)</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -238,12 +388,12 @@ cumulative distribution functions (CDF).</p>
         <li class="right" >
           <a href="noise.html" title="Noise generators (pysteps.noise)"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.1 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Seppo Pulkkinen, Daniele Nerini and Loris Foresti.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.7.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>
 </html>

@@ -1,0 +1,212 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Advection-based extrapolation (pysteps.extrapolation) &#8212; pysteps 0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Scale-based decomposition of precipitation fields (pysteps.cascade)" href="cascade.html" />
+    <link rel="prev" title="Optical flow methods (pysteps.motion)" href="motion.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cascade.html" title="Scale-based decomposition of precipitation fields (pysteps.cascade)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="motion.html" title="Optical flow methods (pysteps.motion)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="advection-based-extrapolation-pysteps-extrapolation">
+<span id="pysteps-extrapolation"></span><h1>Advection-based extrapolation (<code class="xref py py-mod docutils literal notranslate"><span class="pre">pysteps.extrapolation</span></code>)<a class="headerlink" href="#advection-based-extrapolation-pysteps-extrapolation" title="Permalink to this headline">¶</a></h1>
+<p>Methods for advection-based extrapolation of precipitation fields. Currently
+the module contains an implementation of the semi-Lagrangian method described
+in <a class="reference internal" href="index.html#gz2002" id="id1">[1]</a>.</p>
+<div class="section" id="module-pysteps.extrapolation.interface">
+<span id="pysteps-extrapolation-interface"></span><h2>pysteps.extrapolation.interface<a class="headerlink" href="#module-pysteps.extrapolation.interface" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pysteps.extrapolation.interface.get_method">
+<code class="descclassname">pysteps.extrapolation.interface.</code><code class="descname">get_method</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.extrapolation.interface.get_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a callable function for the extrapolation method corresponding to
+the given name. The available options are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>None</td>
+<td>returns None</td>
+</tr>
+<tr class="row-odd"><td>eulerian</td>
+<td>this methods does not apply any advection to the input
+precipitation field (Eulerian persistence)</td>
+</tr>
+<tr class="row-even"><td>semilagrangian</td>
+<td>implementation of the semi-Lagrangian method of
+Germann et al. (2002)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pysteps.extrapolation.semilagrangian">
+<span id="pysteps-extrapolation-semilagrangian"></span><h2>pysteps.extrapolation.semilagrangian<a class="headerlink" href="#module-pysteps.extrapolation.semilagrangian" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of the semi-Lagrangian method of Germann et al (2002).</p>
+<dl class="function">
+<dt id="pysteps.extrapolation.semilagrangian.extrapolate">
+<code class="descclassname">pysteps.extrapolation.semilagrangian.</code><code class="descname">extrapolate</code><span class="sig-paren">(</span><em>R</em>, <em>V</em>, <em>num_timesteps</em>, <em>outval=nan</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.extrapolation.semilagrangian.extrapolate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply semi-Lagrangian extrapolation to a two-dimensional precipitation
+field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of shape (m,n) containing the input precipitation field. All
+values are required to be finite.</p>
+</dd>
+<dt><strong>V</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of shape (2,m,n) containing the x- and y-components of the m*n
+advection field. All values are required to be finite.</p>
+</dd>
+<dt><strong>num_timesteps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Number of time steps to extrapolate.</p>
+</dd>
+<dt><strong>outval</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Optional argument for specifying the value for pixels advected from
+outside the domain. If outval is set to ‘min’, the value is taken as
+the minimum value of R.
+Default : np.nan</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array or tuple</span></dt>
+<dd><p class="first last">If return_displacement=False, return a time series extrapolated fields of
+shape (num_timesteps,m,n). Otherwise, return a tuple containing the
+extrapolated fields and the total displacement along the advection trajectory.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>D_prev</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Optional initial displacement vector field of shape (2,m,n) for the
+extrapolation.
+Default : None</p>
+</dd>
+<dt><strong>n_iter</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Number of inner iterations in the semi-Lagrangian scheme.
+Default : 3</p>
+</dd>
+<dt><strong>inverse</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">If True, the extrapolation trajectory is computed backward along the
+flow (default), forward otherwise.
+Default : True</p>
+</dd>
+<dt><strong>return_displacement</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">If True, return the total advection velocity (displacement) between the
+initial input field and the advected one integrated along the trajectory.
+Default : False</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p><a class="reference internal" href="index.html#gz2002" id="id2">[1]</a></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="motion.html"
+                        title="previous chapter">Optical flow methods (<code class="docutils literal notranslate"><span class="pre">pysteps.motion</span></code>)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cascade.html"
+                        title="next chapter">Scale-based decomposition of precipitation fields (<code class="docutils literal notranslate"><span class="pre">pysteps.cascade</span></code>)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cascade.html" title="Scale-based decomposition of precipitation fields (pysteps.cascade)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="motion.html" title="Optical flow methods (pysteps.motion)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Seppo Pulkkinen, Daniele Nerini and Loris Foresti.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>

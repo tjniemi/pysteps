@@ -1,0 +1,660 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Optical flow methods (pysteps.motion) &#8212; pysteps 0.2 documentation</title>
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advection-based extrapolation (pysteps.extrapolation)" href="extrapolation.html" />
+    <link rel="prev" title="Input/output routines (pysteps.io)" href="io.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="extrapolation.html" title="Advection-based extrapolation (pysteps.extrapolation)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="io.html" title="Input/output routines (pysteps.io)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="optical-flow-methods-pysteps-motion">
+<span id="pysteps-motion"></span><h1>Optical flow methods (<code class="xref py py-mod docutils literal notranslate"><span class="pre">pysteps.motion</span></code>)<a class="headerlink" href="#optical-flow-methods-pysteps-motion" title="Permalink to this headline">¶</a></h1>
+<p>Implementations of optical flow methods.</p>
+<div class="section" id="module-pysteps.motion.interface">
+<span id="pysteps-motion-interface"></span><h2>pysteps.motion.interface<a class="headerlink" href="#module-pysteps.motion.interface" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pysteps.motion.interface.get_method">
+<code class="descclassname">pysteps.motion.interface.</code><code class="descname">get_method</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.motion.interface.get_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a callable function for the optical flow method corresponding to
+the given name. The available options are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Python-based implementations</th>
+</tr>
+<tr class="row-even"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>None</td>
+<td>Returns a zero motion field</td>
+</tr>
+<tr class="row-even"><td>lucaskanade</td>
+<td>OpenCV implementation of the Lucas-Kanade method
+with interpolated motion vectors for areas with no
+precipitation.</td>
+</tr>
+<tr class="row-odd"><td>darts</td>
+<td>Implementation of the DARTS method of Ruzanski et al.</td>
+</tr>
+<tr class="row-even"><td>vet</td>
+<td>Implementation of the VET method of
+Laroche and Zawadzki (1995) and
+Germann and Zawadzki (2002)</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Methods implemented in C (these require separate compilation and linkage)</th>
+</tr>
+<tr class="row-even"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>brox</td>
+<td><p class="first">implementation of the variational method of
+Brox et al. (2004) from IPOL</p>
+<blockquote class="last">
+<div>(<a class="reference external" href="http://www.ipol.im/pub/art/2013/21">http://www.ipol.im/pub/art/2013/21</a>)</div></blockquote>
+</td>
+</tr>
+<tr class="row-even"><td>clg</td>
+<td>implementation of the Combined Local-Global (CLG)
+method of Bruhn et al., 2005 from IPOL
+(<a class="reference external" href="http://www.ipol.im/pub/art/2015/44">http://www.ipol.im/pub/art/2015/44</a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pysteps.motion.darts">
+<span id="pysteps-motion-darts"></span><h2>pysteps.motion.darts<a class="headerlink" href="#module-pysteps.motion.darts" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of the DARTS algorithm.</p>
+<dl class="function">
+<dt id="pysteps.motion.darts.DARTS">
+<code class="descclassname">pysteps.motion.darts.</code><code class="descname">DARTS</code><span class="sig-paren">(</span><em>Z</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.motion.darts.DARTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the advection field from a sequence of input images by using the
+DARTS method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>Z</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">Array of shape (T,m,n) containing a sequence of T two-dimensional input
+images of shape (m,n).</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
+<dd><p class="first last">Three-dimensional array (2,H,W) containing the dense x- and y-components
+of the motion field.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>N_x</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Number of DFT coefficients to use for the input images, x-axis (default=50).</p>
+</dd>
+<dt><strong>N_y</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Number of DFT coefficients to use for the input images, y-axis (default=50).</p>
+</dd>
+<dt><strong>N_t</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Number of DFT coefficients to use for the input images, time axis (default=4).
+N_t must be strictly smaller than T.</p>
+</dd>
+<dt><strong>M_x</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Number of DFT coefficients to compute for the output advection field,
+x-axis  (default=2).</p>
+</dd>
+<dt><strong>M_y</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Number of DFT coefficients to compute for the output advection field,
+y-axis (default=2).</p>
+</dd>
+<dt><strong>print_info</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">If True, print information messages.</p>
+</dd>
+<dt><strong>lsq_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{1, 2}</span></dt>
+<dd><p class="first last">The method to use for solving the linear equations in the least squares
+sense: 1=numpy.linalg.lstsq, 2=explicit computation of the Moore-Penrose
+pseudoinverse and SVD.</p>
+</dd>
+<dt><strong>verbose</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">if set to True, it prints information about the program</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>[RCW2011]</p>
+</dd></dl>
+
+</div>
+<div class="section" id="pysteps-motion-lucaskanade">
+<h2>pysteps.motion.lucaskanade<a class="headerlink" href="#pysteps-motion-lucaskanade" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.motion.lucaskanade.dense_lucaskanade" title="pysteps.motion.lucaskanade.dense_lucaskanade"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dense_lucaskanade</span></code></a>(R,&nbsp;**kwargs)</td>
+<td>OpenCV implementation of the Lucas-Kanade method with interpolated motion vectors for areas with no precipitation.</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-pysteps.motion.lucaskanade"></span><p>OpenCV implementation of the Lucas-Kanade method with interpolated motion
+vectors for areas with no precipitation.</p>
+<dl class="function">
+<dt id="pysteps.motion.lucaskanade.dense_lucaskanade">
+<code class="descclassname">pysteps.motion.lucaskanade.</code><code class="descname">dense_lucaskanade</code><span class="sig-paren">(</span><em>R</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.motion.lucaskanade.dense_lucaskanade" title="Permalink to this definition">¶</a></dt>
+<dd><p>OpenCV implementation of the Lucas-Kanade method with interpolated motion
+vectors for areas with no precipitation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>R</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like, shape (t,m,n)</span></dt>
+<dd><p class="first last">array containing the input precipitation fields, no missing values are
+accepted</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray, shape (2,m,n)</span></dt>
+<dd><p class="first last">three-dimensional array containing the dense x- and y-components of the
+motion field. Return an empty UV array when any sparse vectors is left to
+be interpolated.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
+<dt><strong>max_corners_ST</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">maximum number of corners to return. If there are more corners than are
+found, the strongest of them is returned</p>
+</dd>
+<dt><strong>quality_level_ST</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">parameter characterizing the minimal accepted quality of image corners.
+See original documentation for more details (<a class="reference external" href="https://docs.opencv.org">https://docs.opencv.org</a>)</p>
+</dd>
+<dt><strong>min_distance_ST</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">minimum possible Euclidean distance between the returned corners [px]</p>
+</dd>
+<dt><strong>block_size_ST</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">size of an average block for computing a derivative covariation matrix
+over each pixel neighborhood</p>
+</dd>
+<dt><strong>winsize_LK</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">size of the search window at each pyramid level.
+Small windows (e.g. 10) lead to unrealistic motion</p>
+</dd>
+<dt><strong>nr_levels_LK</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">0-based maximal pyramid level number.
+Not very sensitive parameter</p>
+</dd>
+<dt><strong>nr_IQR_outlier</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">nr of IQR above median to consider the velocity vector as outlier and discard it</p>
+</dd>
+<dt><strong>size_opening</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">the structuring element size for the filtering of isolated pixels [px]</p>
+</dd>
+<dt><strong>decl_grid</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">size of the declustering grid [px]</p>
+</dd>
+<dt><strong>min_nr_samples</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">the minimum number of samples for computing the median within given declustering cell</p>
+</dd>
+<dt><strong>function</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">the radial basis function, based on the Euclidian norm d, used in the
+interpolation of the sparse vectors.
+default : inverse
+available : nearest, inverse, gaussian</p>
+</dd>
+<dt><strong>k</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int or “all”</span></dt>
+<dd><p class="first last">the number of nearest neighbors used to speed-up the interpolation
+If set equal to “all”, it employs all the sparse vectors
+default : 20</p>
+</dd>
+<dt><strong>epsilon</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">adjustable constant for gaussian or inverse functions
+default : median distance between sparse vectors</p>
+</dd>
+<dt><strong>nchunks</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">split the grid points in n chunks to limit the memory usage during the
+interpolation
+default : 5</p>
+</dd>
+<dt><strong>extra_vectors</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd><p class="first last">additional sparse motion vectors as 2d array (columns: x,y,u,v; rows:
+nbr. of vectors) to be integrated with the sparse vectors from the Lucas-Kanade
+local tracking.
+x and y must be in pixel coordinates, with (0,0) being the upper-left
+corner of the field R. u and v must be in pixel units</p>
+</dd>
+<dt><strong>verbose</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">if set to True, it prints information about the program</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="pysteps-motion-vet">
+<h2>pysteps.motion.vet<a class="headerlink" href="#pysteps-motion-vet" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.motion.vet.vet" title="pysteps.motion.vet.vet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vet</span></code></a>(input_images[,&nbsp;sectors,&nbsp;smooth_gain,&nbsp;…])</td>
+<td>Variational Echo Tracking Algorithm presented in <a class="reference external" href="http://dx.doi.org/10.1175/1520-0426(1995)012&lt;0721:ROHWFS&gt;2.0.CO;2">Laroche and Zawadzki (1995)</a>  and used in the McGill Algorithm for Prediction by Lagrangian Extrapolation (MAPLE) described in <a class="reference external" href="http://dx.doi.org/10.1175/1520-0493(2002)130&lt;2859:SDOTPO&gt;2.0.CO;2">Germann and Zawadzki (2002)</a>.</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-pysteps.motion.vet"></span><p>Variational Echo Tracking (VET) Module</p>
+<p>This module implements the VET algorithm presented
+by <a class="reference external" href="http://dx.doi.org/10.1175/1520-0426(1995)012&lt;0721:ROHWFS&gt;2.0.CO;2">Laroche and Zawadzki (1995)</a> and used in the
+McGill Algorithm for Prediction by Lagrangian Extrapolation (MAPLE) described
+in <a class="reference external" href="http://dx.doi.org/10.1175/1520-0493(2002)130&lt;2859:SDOTPO&gt;2.0.CO;2">Germann and Zawadzki (2002)</a>.</p>
+<p>The morphing and the cost functions are implemented in Cython and parallelized
+for performance.</p>
+<dl class="function">
+<dt id="pysteps.motion.vet.ceil_int">
+<code class="descclassname">pysteps.motion.vet.</code><code class="descname">ceil_int</code><span class="sig-paren">(</span><em>scalar</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.motion.vet.ceil_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Round number to nearest integer. Returns and integer value.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.motion.vet.get_padding">
+<code class="descclassname">pysteps.motion.vet.</code><code class="descname">get_padding</code><span class="sig-paren">(</span><em>dimension_size</em>, <em>sectors</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.motion.vet.get_padding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the padding at each side of the one dimensions of the image
+so the new image dimensions are divided evenly in the
+number of <em>sectors</em> specified.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>dimension_size</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Actual dimension size.</p>
+</dd>
+<dt><strong>sectors</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">number of sectors over which the the image will be divided.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.motion.vet.morph">
+<code class="descclassname">pysteps.motion.vet.</code><code class="descname">morph</code><span class="sig-paren">(</span><em>image</em>, <em>displacement</em>, <em>gradient=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.motion.vet.morph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Morph image by applying a displacement field (Warping).</p>
+<p>The new image is created by selecting for each position the values of the
+input image at the positions given by the x and y displacements.
+The routine works in a backward sense.
+The displacement vectors have to refer to their destination.</p>
+<p>For more information in Morphing functions see Section 3 in
+<a class="reference external" href="http://dx.doi.org/10.1111/j.1600-0870.2007.00275.x">Beezley and Mandel (2008)</a>.</p>
+<p>Beezley, J. D., &amp; Mandel, J. (2008).
+Morphing ensemble Kalman filters. Tellus A, 60(1), 131-140.</p>
+<p>The displacement field in x and y directions and the image must have the
+same dimensions.</p>
+<p>The morphing is executed in parallel over x axis.</p>
+<p>The value of displaced pixels that fall outside the limits takes the
+value of the nearest edge. Those pixels are indicated by values greater
+than 1 in the output mask.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>image</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray (ndim = 2)</span></dt>
+<dd><p class="first last">Image to morph</p>
+</dd>
+<dt><strong>displacement</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray (ndim = 3)</span></dt>
+<dd><p class="first">Displacement field to be applied (Warping). The first dimension
+corresponds to the coordinate to displace.</p>
+<p>The dimensions are:
+displacement [ i/x (0) or j/y (1) ,</p>
+<blockquote class="last">
+<div><p>i index of pixel, j index of pixel ]</p>
+</div></blockquote>
+</dd>
+<dt><strong>gradient</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If True, the gradient of the morphing function is returned.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>image</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray (float64 ,ndim = 2)</span></dt>
+<dd><p class="first last">Morphed image.</p>
+</dd>
+<dt><strong>mask</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray (int8 ,ndim = 2)</span></dt>
+<dd><p class="first last">Invalid values mask. Points outside the boundaries are masked.
+Values greater than 1, indicate masked values.</p>
+</dd>
+<dt><strong>gradient_values</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray (float64 ,ndim = 3), optional</span></dt>
+<dd><p class="first last">If gradient keyword is True, the gradient of the function is also
+returned.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.motion.vet.round_int">
+<code class="descclassname">pysteps.motion.vet.</code><code class="descname">round_int</code><span class="sig-paren">(</span><em>scalar</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.motion.vet.round_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Round number to nearest integer. Returns and integer value.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.motion.vet.vet">
+<code class="descclassname">pysteps.motion.vet.</code><code class="descname">vet</code><span class="sig-paren">(</span><em>input_images</em>, <em>sectors=((32</em>, <em>16</em>, <em>4</em>, <em>2)</em>, <em>(32</em>, <em>16</em>, <em>4</em>, <em>2))</em>, <em>smooth_gain=1000000.0</em>, <em>first_guess=None</em>, <em>intermediate_steps=False</em>, <em>verbose=True</em>, <em>indexing='yx'</em>, <em>padding=0</em>, <em>options=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.motion.vet.vet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variational Echo Tracking Algorithm presented in
+<a class="reference external" href="http://dx.doi.org/10.1175/1520-0426(1995)012&lt;0721:ROHWFS&gt;2.0.CO;2">Laroche and Zawadzki (1995)</a>  and used in the McGill Algorithm for
+Prediction by Lagrangian Extrapolation (MAPLE) described in
+<a class="reference external" href="http://dx.doi.org/10.1175/1520-0493(2002)130&lt;2859:SDOTPO&gt;2.0.CO;2">Germann and Zawadzki (2002)</a>.</p>
+<p>This algorithm computes the displacement field between two images
+( the input_image with respect to the template image).
+The displacement is sought by minimizing sum of the residuals of the
+squared differences of the images pixels and the contribution of a
+smoothness constrain.</p>
+<p>In order to find the minimum an scaling guess procedure is applied,
+from larger scales
+to a finer scale. This reduces the changes that the minimization procedure
+converges to a local minimum. The scaling guess is defined by the scaling
+sectors (see <strong>sectors</strong> keyword).</p>
+<p>The smoothness of the returned displacement field is controlled by the
+smoothness constrain gain (<strong>smooth_gain</strong> keyword).</p>
+<p>If a first guess is not given, zero displacements are used as first guess.</p>
+<p>To minimize the cost function, the <a href="#id5"><span class="problematic" id="id6">`scipy minimization`_</span></a> function is used
+with the ‘CG’ method. This method proved to give the best results under
+any different conditions and is the most similar one to the original VET
+implementation in <a class="reference external" href="http://dx.doi.org/10.1175/1520-0426(1995)012&lt;0721:ROHWFS&gt;2.0.CO;2">Laroche and Zawadzki (1995)</a>.</p>
+<p>The method CG uses a nonlinear conjugate gradient algorithm by Polak and
+Ribiere, a variant of the Fletcher-Reeves method described in
+Nocedal and Wright (2006), pp. 120-122.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>input_images</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">ndarray</a> or MaskedArray</span></dt>
+<dd><p class="first">Input images, sequence of 2D arrays, or 3D arrays.
+The first dimension represents the images time dimension.</p>
+<p>The template_image (first element in first dimensions) denotes the
+reference image used to obtain the displacement (2D array).
+The second is the target image.</p>
+<p class="last">The expected dimensions are (2,ni,nj).</p>
+</dd>
+<dt><strong>sectors</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list or array, optional</span></dt>
+<dd><p class="first last">The number of sectors for each dimension used in the scaling procedure.
+If dimension is 1, the same sectors will be used both image dimensions
+(x and y). If is 2D, the each row determines the sectors of the
+each dimension.</p>
+</dd>
+<dt><strong>smooth_gain</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span></dt>
+<dd><p class="first last">Smooth gain factor</p>
+</dd>
+<dt><strong>first_guess</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">ndarray</a>, <a href="#id7"><span class="problematic" id="id8">optional_</span></a></span></dt>
+<dd><p class="first">The shape of the first guess should have the same shape as the initial
+sectors shapes used in the scaling procedure.
+If first_guess is not present zeros are used as first guess.</p>
+<dl class="last docutils">
+<dt>E.g.:</dt>
+<dd><p class="first last">If the first sector shape in the scaling procedure is (ni,nj), then
+the first_guess should have (2, ni, nj ) shape.</p>
+</dd>
+</dl>
+</dd>
+<dt><strong>intermediate_steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If True, also return a list with the first guesses obtained during the
+scaling procedure. False, by default.</p>
+</dd>
+<dt><strong>verbose</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">Verbosity enabled if True (default).</p>
+</dd>
+<dt><strong>indexing</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd><p class="first last">Input indexing order.’ij’ and ‘xy’ indicates that the
+dimensions of the input are (time, longitude, latitude), while
+‘yx’ indicates (time, latitude, longitude).
+The displacement field dimensions are ordered accordingly in a way that
+the first dimension indicates the displacement along x (0) or y (1).
+That is, UV displacements are always returned.</p>
+</dd>
+<dt><strong>padding</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">Padding width in grid points. A border is added to the input array
+to reduce the effects of the minimization at the border.</p>
+</dd>
+<dt><strong>options</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict, optional</span></dt>
+<dd><p class="first last">A dictionary of solver options.
+See <a href="#id9"><span class="problematic" id="id10">`scipy minimization`_</span></a> function for more details.</p>
+</dd>
+<dt><strong>.. _`scipy minimization`</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html</a></span></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>displacement_field</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">ndarray</a></span></dt>
+<dd><p class="first last">Displacement Field (2D array representing the transformation) that
+warps the template image into the input image.
+The dimensions are (2,ni,nj), where the first
+dimension indicates the displacement along x (0) or y (1).</p>
+</dd>
+<dt><strong>intermediate_steps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">ndarray</a></span></dt>
+<dd><p class="first last">List with the first guesses obtained during the scaling procedure.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<p>Laroche, S., and I. Zawadzki, 1995:
+Retrievals of horizontal winds from single-Doppler clear-air data by
+methods of cross-correlation and variational analysis.
+J. Atmos. Oceanic Technol., 12, 721–738.
+doi: <a class="reference external" href="http://dx.doi.org/10.1175/1520-0426(1995">http://dx.doi.org/10.1175/1520-0426(1995</a>)012&lt;0721:ROHWFS&gt;2.0.CO;2</p>
+<p>Germann, U. and I. Zawadzki, 2002:
+Scale-Dependence of the Predictability of Precipitation from Continental
+Radar Images.  Part I: Description of the Methodology.
+Mon. Wea. Rev., 130, 2859–2873,
+doi: 10.1175/1520-0493(2002)130&lt;2859:SDOTPO&gt;2.0.CO;2.</p>
+<p>Nocedal, J, and S J Wright. 2006. Numerical Optimization. Springer New York.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pysteps.motion.vet.vet_cost_function">
+<code class="descclassname">pysteps.motion.vet.</code><code class="descname">vet_cost_function</code><span class="sig-paren">(</span><em>sector_displacement_1d</em>, <em>input_images</em>, <em>blocks_shape</em>, <em>mask</em>, <em>smooth_gain</em>, <em>debug=False</em>, <em>gradient=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.motion.vet.vet_cost_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variational Echo Tracking Cost Function.</p>
+<p>This function is designed to be used with the <a class="reference external" href="https://docs.scipy.org/doc/scipy-0.18.1/reference/generated/scipy.optimize.minimize.html">scipy.optimize.minimize</a></p>
+<p>The function first argument is the variable to be used in the
+minimization procedure.</p>
+<p>The sector displacement must be a flat array compatible with the
+dimensions of the input image and sectors shape (see parameters section
+below for more details).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>sector_displacement_1d</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">ndarray</a></span></dt>
+<dd><p class="first last">Array of displacements to apply to each sector. The dimensions are:
+sector_displacement_2d
+[ x (0) or y (1) displacement, i index of sector, j index of sector ].
+The shape of the sector displacements must be compatible with the
+input image and the block shape.
+The shape should be (2, mx, my) where mx and my are the numbers of
+sectors in the x and the y dimension.</p>
+</dd>
+<dt><strong>input_images</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">ndarray</a></span></dt>
+<dd><p class="first">Input images, sequence of 2D arrays, or 3D arrays.
+The first dimension represents the images time dimension.</p>
+<p>The template_image (first element in first dimensions) denotes the
+reference image used to obtain the displacement (2D array).
+The second is the target image.</p>
+<p class="last">The expected dimensions are (2,nx,ny).
+Be aware the the 2D images dimensions correspond to (lon,lat) or (x,y).</p>
+</dd>
+<dt><strong>blocks_shape</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">ndarray</a> (ndim=2)</span></dt>
+<dd><p class="first last">Number of sectors in each dimension (x and y).
+blocks_shape.shape = (mx,my)</p>
+</dd>
+<dt><strong>mask</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html">ndarray</a> (ndim=2)</span></dt>
+<dd><p class="first last">Data mask. If is True, the data is marked as not valid and is not
+used in the computations.</p>
+</dd>
+<dt><strong>smooth_gain</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Smoothness constrain gain</p>
+</dd>
+<dt><strong>debug</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If True, print debugging information.</p>
+</dd>
+<dt><strong>gradient</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">If True, the gradient of the morphing function is returned.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>penalty or  gradient values.</strong></dt>
+<dd></dd>
+<dt><strong>penalty</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Value of the cost function</p>
+</dd>
+<dt><strong>gradient_values</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray (float64 ,ndim = 3), optional</span></dt>
+<dd><p class="first last">If gradient keyword is True, the gradient of the function is also
+returned.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="io.html"
+                        title="previous chapter">Input/output routines (<code class="docutils literal notranslate"><span class="pre">pysteps.io</span></code>)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="extrapolation.html"
+                        title="next chapter">Advection-based extrapolation (<code class="docutils literal notranslate"><span class="pre">pysteps.extrapolation</span></code>)</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="extrapolation.html" title="Advection-based extrapolation (pysteps.extrapolation)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="io.html" title="Input/output routines (pysteps.io)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">pysteps 0.2 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Seppo Pulkkinen, Daniele Nerini and Loris Foresti.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>
