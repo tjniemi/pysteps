@@ -458,13 +458,16 @@ counted in the rank histogram.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.verification.plots.plot_rankhist" title="pysteps.verification.plots.plot_rankhist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_rankhist</span></code></a>(rankhist[,&nbsp;ax])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.verification.plots.plot_intensityscale" title="pysteps.verification.plots.plot_intensityscale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_intensityscale</span></code></a>(iss[,&nbsp;fig,&nbsp;vmin,&nbsp;vmax,&nbsp;…])</td>
+<td>Plot a intensity-scale verification table with a color bar and axis labels.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.verification.plots.plot_rankhist" title="pysteps.verification.plots.plot_rankhist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_rankhist</span></code></a>(rankhist[,&nbsp;ax])</td>
 <td>Plot a rank histogram.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.verification.plots.plot_reldiag" title="pysteps.verification.plots.plot_reldiag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_reldiag</span></code></a>(reldiag[,&nbsp;ax])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.verification.plots.plot_reldiag" title="pysteps.verification.plots.plot_reldiag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_reldiag</span></code></a>(reldiag[,&nbsp;ax])</td>
 <td>Plot a reliability diagram.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.verification.plots.plot_ROC" title="pysteps.verification.plots.plot_ROC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_ROC</span></code></a>(ROC[,&nbsp;ax,&nbsp;opt_prob_thr])</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.verification.plots.plot_ROC" title="pysteps.verification.plots.plot_ROC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_ROC</span></code></a>(ROC[,&nbsp;ax,&nbsp;opt_prob_thr])</td>
 <td>Plot a ROC curve.</td>
 </tr>
 </tbody>
@@ -835,7 +838,16 @@ if the number of samples in a bin is smaller than bin_count.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.verification.spatialscores.fss" title="pysteps.verification.spatialscores.fss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fss</span></code></a>(X_f,&nbsp;X_o,&nbsp;thr,&nbsp;scale)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.verification.spatialscores.binary_mse" title="pysteps.verification.spatialscores.binary_mse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary_mse</span></code></a>(X_f,&nbsp;X_o,&nbsp;thr[,&nbsp;wavelet])</td>
+<td>Compute an intensity-scale verification as the MSE of the binary error.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.verification.spatialscores.intensity_scale_init" title="pysteps.verification.spatialscores.intensity_scale_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">intensity_scale_init</span></code></a>(name,&nbsp;thrs[,&nbsp;scales,&nbsp;…])</td>
+<td>Initialize an intensty-scale verification object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.verification.spatialscores.intensity_scale_accum" title="pysteps.verification.spatialscores.intensity_scale_accum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">intensity_scale_accum</span></code></a>(iss,&nbsp;X_f,&nbsp;X_o)</td>
+<td>Compute and update the intensity-scale verification scores.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.verification.spatialscores.fss" title="pysteps.verification.spatialscores.fss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fss</span></code></a>(X_f,&nbsp;X_o,&nbsp;thr,&nbsp;scale)</td>
 <td>Compute the fractions skill score (FSS) for a deterministic forecast field and the corresponding observation.</td>
 </tr>
 </tbody>

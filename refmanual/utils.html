@@ -185,8 +185,14 @@ manipulating the dimensions of precipitation fields and computing the FFT.</p>
 <tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.dimension.aggregate_fields_time" title="pysteps.utils.dimension.aggregate_fields_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aggregate_fields_time</span></code></a>(R,&nbsp;metadata,&nbsp;…[,&nbsp;…])</td>
 <td>Aggregate fields in time.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.dimension.aggregate_fields" title="pysteps.utils.dimension.aggregate_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aggregate_fields</span></code></a>(R,&nbsp;window_size[,&nbsp;axis,&nbsp;method])</td>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.dimension.aggregate_fields_space" title="pysteps.utils.dimension.aggregate_fields_space"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aggregate_fields_space</span></code></a>(R,&nbsp;metadata,&nbsp;…[,&nbsp;…])</td>
+<td>Upscale fields in space.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.dimension.aggregate_fields" title="pysteps.utils.dimension.aggregate_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aggregate_fields</span></code></a>(R,&nbsp;window_size[,&nbsp;axis,&nbsp;method])</td>
 <td>Aggregate fields.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.dimension.clip_domain" title="pysteps.utils.dimension.clip_domain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clip_domain</span></code></a>(R,&nbsp;metadata[,&nbsp;extent])</td>
+<td>Clip the field domain by geographical coordinates.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.dimension.square_domain" title="pysteps.utils.dimension.square_domain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">square_domain</span></code></a>(R,&nbsp;metadata[,&nbsp;method,&nbsp;inverse])</td>
 <td>Either pad or crop a field to obtain a square domain.</td>
@@ -415,42 +421,12 @@ crop, the inverse is performed by padding the field with zeros.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.fft.get_method" title="pysteps.utils.fft.get_method"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_method</span></code></a>(name)</td>
-<td>Return a callable function for the FFT method corresponding to the given name.</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_method</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
 <span class="target" id="module-pysteps.utils.fft"></span><p>Interface module for different FFT methods.</p>
-<dl class="function">
-<dt id="pysteps.utils.fft.get_method">
-<code class="descclassname">pysteps.utils.fft.</code><code class="descname">get_method</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.utils.fft.get_method" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a callable function for the FFT method corresponding to the given
-name.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>name</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd><p class="first last">The name of the method. The available options are ‘numpy’, ‘scipy’ and 
-‘pyfftw’</p>
-</dd>
-</dl>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
-<dd><p class="first last">A two-element tuple containing the FFT module and a dictionary of 
-default keyword arguments for calling the FFT method. Each module 
-implements the numpy.fft interface.</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="module-pysteps.utils.interface">
 <span id="pysteps-utils-interface"></span><h2>pysteps.utils.interface<a class="headerlink" href="#module-pysteps.utils.interface" title="Permalink to this headline">¶</a></h2>
@@ -581,6 +557,12 @@ reflectivity</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.transformation.boxcox_transform_test_lambdas" title="pysteps.utils.transformation.boxcox_transform_test_lambdas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boxcox_transform_test_lambdas</span></code></a>(R[,&nbsp;Lambdas,&nbsp;…])</td>
 <td>Test and plot various lambdas for the Box-Cox transformation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pysteps.utils.transformation.NQ_transform" title="pysteps.utils.transformation.NQ_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NQ_transform</span></code></a>(R[,&nbsp;metadata,&nbsp;inverse])</td>
+<td>The normal quantile transformation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pysteps.utils.transformation.sqrt_transform" title="pysteps.utils.transformation.sqrt_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sqrt_transform</span></code></a>(R[,&nbsp;metadata,&nbsp;inverse])</td>
+<td>Square-root transform.</td>
 </tr>
 </tbody>
 </table>
