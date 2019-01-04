@@ -68,17 +68,17 @@ precipitation nowcasts.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>eulerian</td>
-<td>this approach simply keeps the last observation
-frozen (Eulerian persistence)</td>
+<td>this approach keeps the last observation frozen
+(Eulerian persistence)</td>
 </tr>
 <tr class="row-odd"><td>lagrangian or
 extrapolation</td>
 <td>this approach extrapolates the last observation
-following the motion field (Lagrangian persistence)</td>
+using the motion field (Lagrangian persistence)</td>
 </tr>
 <tr class="row-even"><td>steps</td>
 <td>implementation of the STEPS stochastic nowcasting
-method as described in [Seed2003],
+method described in [Seed2003],
 [BPS2006] and [SPN2013]</td>
 </tr>
 </tbody>
@@ -106,7 +106,8 @@ field.</p>
 </dd>
 <dt><strong>V</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
 <dd><p class="first last">Array of shape (2,m,n) containing the x- and y-components of the advection
-field. The velocities are assumed to represent one time step.</p>
+field. The velocities are assumed to represent one time step between the 
+inputs.</p>
 </dd>
 <dt><strong>num_timesteps</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd><p class="first last">Number of time steps to forecast.</p>
@@ -117,7 +118,8 @@ field. The velocities are assumed to represent one time step.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first docutils">
 <dt><strong>out</strong> <span class="classifier-delimiter">:</span> <span class="classifier">ndarray</span></dt>
 <dd><p class="first last">Three-dimensional array of shape (num_timesteps,m,n) containing a time
-series of nowcast precipitation fields.</p>
+series of nowcast precipitation fields. The time step is taken from
+the advection field.</p>
 </dd>
 </dl>
 </td>
@@ -129,7 +131,7 @@ series of nowcast precipitation fields.</p>
 pysteps.extrapolation.interface.</p>
 </dd>
 <dt><strong>extrap_kwargs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
-<dd><p class="first last">Optional dictionary that is supplied as keyword arguments to the
+<dd><p class="first last">Optional dictionary that is expanded into keyword arguments for the
 extrapolation method.</p>
 </dd>
 </dl>
@@ -149,7 +151,7 @@ extrapolation method.</p>
 <p>Implementation of the STEPS method.</p>
 <dl class="function">
 <dt id="pysteps.nowcasts.steps.forecast">
-<code class="descclassname">pysteps.nowcasts.steps.</code><code class="descname">forecast</code><span class="sig-paren">(</span><em>R</em>, <em>V</em>, <em>n_timesteps</em>, <em>n_ens_members=24</em>, <em>n_cascade_levels=6</em>, <em>R_thr=None</em>, <em>kmperpixel=None</em>, <em>timestep=None</em>, <em>extrap_method='semilagrangian'</em>, <em>decomp_method='fft'</em>, <em>bandpass_filter_method='gaussian'</em>, <em>noise_method='nonparametric'</em>, <em>noise_stddev_adj=False</em>, <em>ar_order=2</em>, <em>vel_pert_method=None</em>, <em>conditional=False</em>, <em>use_precip_mask=True</em>, <em>use_probmatching=True</em>, <em>mask_method='incremental'</em>, <em>callback=None</em>, <em>return_output=True</em>, <em>seed=None</em>, <em>num_workers=None</em>, <em>fft_method='numpy'</em>, <em>extrap_kwargs={}</em>, <em>filter_kwargs={}</em>, <em>noise_kwargs={}</em>, <em>vel_pert_kwargs={}</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.nowcasts.steps.forecast" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pysteps.nowcasts.steps.</code><code class="descname">forecast</code><span class="sig-paren">(</span><em>R</em>, <em>V</em>, <em>n_timesteps</em>, <em>n_ens_members=24</em>, <em>n_cascade_levels=6</em>, <em>R_thr=None</em>, <em>kmperpixel=None</em>, <em>timestep=None</em>, <em>extrap_method='semilagrangian'</em>, <em>decomp_method='fft'</em>, <em>bandpass_filter_method='gaussian'</em>, <em>noise_method='nonparametric'</em>, <em>noise_stddev_adj=False</em>, <em>ar_order=2</em>, <em>vel_pert_method='bps'</em>, <em>conditional=False</em>, <em>probmatching_method='cdf'</em>, <em>mask_method='incremental'</em>, <em>callback=None</em>, <em>return_output=True</em>, <em>seed=None</em>, <em>num_workers=None</em>, <em>fft_method='numpy'</em>, <em>extrap_kwargs={}</em>, <em>filter_kwargs={}</em>, <em>noise_kwargs={}</em>, <em>vel_pert_kwargs={}</em><span class="sig-paren">)</span><a class="headerlink" href="#pysteps.nowcasts.steps.forecast" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a nowcast ensemble by using the Short-Term Ensemble Prediction
 System (STEPS) method.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -184,7 +186,7 @@ inputs. All values are required to be finite.</p>
 <dd><p class="first last">If return_output is True, a four-dimensional array of shape
 (n_ens_members,n_timesteps,m,n) containing a time series of forecast
 precipitation fields for each ensemble member. Otherwise, a None value
-is returned.</p>
+is returned. The time step is taken from the input precipitation fields R.</p>
 </dd>
 </dl>
 </td>
@@ -193,7 +195,7 @@ is returned.</p>
 <tr class="field-odd field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
 <dt><strong>R_thr</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
 <dd><p class="first last">Specifies the threshold value for minimum observable precipitation
-intensity. Must be set if use_probmatching is True or conditional is True.</p>
+intensity. Required if mask_method is not None or conditional is True.</p>
 </dd>
 <dt><strong>kmperpixel</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
 <dd><p class="first last">Spatial resolution of the input data (kilometers/pixel). Required if
@@ -215,9 +217,10 @@ of pysteps.cascade.interface.</p>
 <dd><p class="first last">Name of the bandpass filter method to use with the cascade decomposition.
 See the documentation of pysteps.cascade.interface.</p>
 </dd>
-<dt><strong>noise_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{‘parametric’,’nonparametric’,’ssft’,’nested’}</span></dt>
+<dt><strong>noise_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{‘parametric’,’nonparametric’,’ssft’,’nested’,None}</span></dt>
 <dd><p class="first last">Name of the noise generator to use for perturbating the precipitation
-field. See the documentation of pysteps.noise.interface.</p>
+field. See the documentation of pysteps.noise.interface. If set to None,
+no noise is generated.</p>
 </dd>
 <dt><strong>noise_stddev_adj</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
 <dd><p class="first last">Optional adjustment for the standard deviations of the noise fields added
@@ -226,30 +229,29 @@ to each cascade level. See pysteps.noise.utils.compute_noise_stddev_adjs.</p>
 <dt><strong>ar_order</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
 <dd><p class="first last">The order of the autoregressive model to use. Must be &gt;= 1.</p>
 </dd>
-<dt><strong>vel_pert_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{‘bps’}</span></dt>
-<dd><p class="first last">Name of the noise generator to use for perturbing the velocity field. See
-the documentation of pysteps.noise.interface.</p>
+<dt><strong>vel_pert_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{‘bps’,None}</span></dt>
+<dd><p class="first last">Name of the noise generator to use for perturbing the advection field. See
+the documentation of pysteps.noise.interface. If set to None, the advection 
+field is not perturbed.</p>
 </dd>
 <dt><strong>conditional</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
 <dd><p class="first last">If set to True, compute the statistics of the precipitation field
-conditionally by excluding the areas where the values are below the
-threshold R_thr.</p>
+conditionally by excluding pixels where the values are below the threshold
+R_thr.</p>
 </dd>
-<dt><strong>use_precip_mask</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
-<dd><p class="first last">If True, set pixels outside precipitation areas to the minimum value of
-the observed field.</p>
+<dt><strong>mask_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{‘obs’,’sprog’,’incremental’,None}</span></dt>
+<dd><p class="first last">The method to use for masking no precipitation areas in the forecast field. 
+The masked pixels are set to the minimum value of the observations.
+‘obs’ = apply R_thr to the most recently observed precipitation intensity
+field, ‘sprog’ = use the smoothed forecast field from S-PROG, where the
+AR(p) model has been applied, ‘incremental’ = iteratively buffer the mask
+with a certain rate (currently it is 1 km/min), None=no masking.</p>
 </dd>
-<dt><strong>mask_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{‘obs’, ‘sprog’, ‘incremental’}</span></dt>
-<dd><p class="first last">The precipitation/no precipitation method to use with mask: ‘obs’ = apply R_thr
-to the most recently observed precipitation intensity field, ‘sprog’ = use the
-smoothed forecast field from S-PROG, where the AR(p) model has been applied,
-‘incremental’ = iteratively buffer the mask with a certain rate (currently
-it is 1 km/min)</p>
-</dd>
-<dt><strong>use_probmatching</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
-<dd><p class="first last">If True, apply probability matching to the forecast field in order to
-preserve the distribution of the most recently observed precipitation
-field.</p>
+<dt><strong>probmatching_method</strong> <span class="classifier-delimiter">:</span> <span class="classifier">{‘cdf’,’mean’,None}</span></dt>
+<dd><p class="first last">Method for matching the statistics of the forecast field with those of
+the most recently observed one. Requires that mask_method is not None.
+‘cdf’=map the forecast CDF to the observed one, ‘mean’=adjust only the
+mean value of the forecast field, None=no matching applied.</p>
 </dd>
 <dt><strong>callback</strong> <span class="classifier-delimiter">:</span> <span class="classifier">function</span></dt>
 <dd><p class="first last">Optional function that is called after computation of each time step of
@@ -299,6 +301,10 @@ initializer of the velocity perturbator.</p>
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="extrapolation.html#module-pysteps.extrapolation.interface" title="pysteps.extrapolation.interface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pysteps.extrapolation.interface</span></code></a>, <a class="reference internal" href="cascade.html#module-pysteps.cascade.interface" title="pysteps.cascade.interface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pysteps.cascade.interface</span></code></a>, <a class="reference internal" href="noise.html#module-pysteps.noise.interface" title="pysteps.noise.interface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pysteps.noise.interface</span></code></a>, <a class="reference internal" href="noise.html#pysteps.noise.utils.compute_noise_stddev_adjs" title="pysteps.noise.utils.compute_noise_stddev_adjs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pysteps.noise.utils.compute_noise_stddev_adjs</span></code></a></p>
 </div>
+<p class="rubric">Notes</p>
+<p>If noise_method and vel_pert_method are None, n_ens_members is 1,
+mask_method is ‘sprog’ and probmatching_method is ‘mean’, the deterministic
+S-PROG nowcast is generated, see [Seed2003].</p>
 <p class="rubric">References</p>
 <p>[Seed2003], [BPS2006], [SPN2013]</p>
 </dd></dl>
