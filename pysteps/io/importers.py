@@ -78,6 +78,7 @@ Available Importers
     import_odim_hdf5
     import_knmi_hdf5
     import_fmi_tif
+    import_uh_tif
 """
 
 
@@ -1083,6 +1084,93 @@ def _import_fmi_tif_geodata(dataset):
     geodata["y1"]          = corner_coords.bottom
     geodata["x2"]          = corner_coords.right
     geodata["y2"]          = corner_coords.top
+    geodata["xpixelsize"]  = pixel_size[0]
+    geodata["ypixelsize"]  = pixel_size[1]
+    geodata["yorigin"]     = 'upper'
+
+    return geodata
+
+
+def import_uh_tif(filename, **kwargs):
+    """Import a GeoTIF radar precipitation intensity composite from the UH
+    archive.
+
+    Parameters
+    ----------
+    filename : str
+        Name of the file to import.
+
+    Other Parameters
+    ----------------
+    gzipped : bool
+        If True, the input file is treated as a compressed gzip file.
+
+    Returns
+    -------
+    out : tuple
+        A three-element tuple containing the precipitation intensity composite
+        imported from the UH archive and the associated quality field and
+        metadata. The quality field is currently set to None.
+
+    """
+    if not rasterio_imported:
+        raise MissingOptionalDependency(
+            "rasterio package is required to import radar "
+            "reflectivity composites using UH Geotiff specification "
+            "but it is not installed")
+    if not pycrs_imported:
+        raise MissingOptionalDependency(
+            "pycrs package is required to import radar "
+            "reflectivity composites using UH Geotiff specification "
+            "but it is not installed")
+
+    gzipped = kwargs.get("gzipped", False)
+
+    if gzipped is False:
+        with rasterio.open(filename) as raster_data:
+            R = _import_uh_data(raster_data)
+            geodata = _import_uh_geodata(raster_data)
+    else:
+        with gzip.open(filename) as gzip_infile:
+            with rasterio.open(gzip_infile) as raster_data:
+                R = _import_uh_data(raster_data)
+                geodata = _import_uh_geodata(raster_data)
+
+    metadata = geodata
+
+    metadata["institution"] = "University of Helsinki"
+    metadata["accutime"]    = 5.
+    metadata["unit"]        = "mm/h"
+    metadata["transform"]   = None
+    metadata["zerovalue"]   = np.nanmin(R)
+    metadata["threshold"]   = np.nanmin(R[R > np.nanmin(R)])
+
+    return R, None, metadata
+
+
+def _import_uh_data(dataset):
+    precip = dataset.read(1)
+    no_data = np.nan
+    precip = np.flipud(precip)
+    MASK = precip == no_data
+    precip = precip.astype(float)
+    precip[MASK] = np.nan
+
+    return precip
+
+
+def _import_uh_geodata(dataset):
+    geodata = {}
+
+    proj4str = pycrs.parser.from_unknown_wkt(dataset.crs.wkt).to_proj4()
+    corner_coords = dataset.bounds
+    pixel_size = dataset.res
+
+    geodata["projection"]  = proj4str
+    geodata["x1"]          = corner_coords.left
+    geodata["y1"]          = corner_coords.top
+    geodata["x2"]          = corner_coords.right
+    geodata["y2"]          = corner_coords.bottom
     geodata["xpixelsize"]  = pixel_size[0]
     geodata["ypixelsize"]  = pixel_size[1]
     geodata["yorigin"]     = 'upper'

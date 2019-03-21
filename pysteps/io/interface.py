@@ -23,6 +23,7 @@ _importer_methods['mch_metranet'] = importers.import_mch_metranet
 _importer_methods['odim_hdf5'] = importers.import_odim_hdf5
 _importer_methods['knmi_hdf5'] = importers.import_knmi_hdf5
 _importer_methods['fmi_tif'] = importers.import_fmi_tif
+_importer_methods['uh_tif'] = importers.import_uh_tif
 
 _exporter_methods = dict()
 _exporter_methods['netcdf'] = exporters.initialize_forecast_exporter_netcdf
@@ -68,6 +69,9 @@ def get_method(name, method_type):
         | fmi_tif      | GeoTIF files in the Finnish Meteorological Institute  |
         |              | (FMI) open data archive containing reflectivity       |
         |              | composites (dBZ).                                     |
+        +--------------+-------------------------------------------------------+
+        | uh_tif       | GeoTIF files in the University of Helsinki (UH)       |
+        |              | archive containing precipitation intensity composites.|
         +--------------+-------------------------------------------------------+
 
         Exporters:
