@@ -60,7 +60,7 @@ experiment = {
     "n_ens_members"     : [20],
     "ar_order"          : [2],
     "n_cascade_levels"  : [6],
-    "noise_adjustment"  : [True],
+    "noise_adjustment"  : ["auto"],
     "conditional"       : [False],
     "mask_method"       : ["incremental"],      # obs, incremental, sprog
 }

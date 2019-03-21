@@ -2,7 +2,7 @@
 
 """Cascade decomposition
 
-This script computes and plots the cascade decompositon of a single radar 
+This script computes and plots the cascade decompositon of a single radar
 precipitation field.
 
 More info: https://pysteps.github.io/
@@ -36,13 +36,13 @@ import pysteps as stp
 
 ## input data (copy/paste values from table above)
 startdate_str = "201701311030"
-data_source   = "mch_hdf5"
+data_source   = "mch"
 
 ## parameters
 r_threshold         = 0.1 # [mm/h]
 num_cascade_levels  = 6
 unit                = "mm/h"    # mm/h or dBZ
-transformation      = "dB"      # None or dB 
+transformation      = "dB"      # None or dB
 adjust_domain       = None      # None or "square"
 
 # Read-in the data
@@ -53,7 +53,7 @@ startdate  = datetime.datetime.strptime(startdate_str, "%Y%m%d%H%M")
 ds = stp.rcparams.data_sources[data_source]
 
 ## find radar field filenames
-input_files = stp.io.find_by_date(startdate, ds.root_path, ds.path_fmt, ds.fn_pattern, 
+input_files = stp.io.find_by_date(startdate, ds.root_path, ds.path_fmt, ds.fn_pattern,
                                   ds.fn_ext, ds.timestep, 0, 0)
 
 ## read radar field files
@@ -65,7 +65,7 @@ Rmask = np.isnan(R)
 # Prepare input files
 print("Prepare the data...")
 
-## if necessary, convert to rain rates [mm/h]    
+## if necessary, convert to rain rates [mm/h]
 converter = stp.utils.get_method(unit)
 R, metadata = converter(R, metadata)
 
@@ -89,7 +89,7 @@ R_[~np.isfinite(R_)] = metadata_["zerovalue"]
 F = abs(np.fft.fftshift(np.fft.fft2(R_)))
 fig = plt.figure()
 M,N = F.shape
-im = plt.imshow(np.log(F**2), vmin=4, vmax=24, cmap=cm.jet, 
+im = plt.imshow(np.log(F**2), vmin=4, vmax=24, cmap=cm.jet,
                 extent=(-N/2, N/2, -M/2, M/2))
 cb = fig.colorbar(im)
 plt.xlabel("Wavenumber $k_x$")
@@ -101,7 +101,7 @@ plt.show()
 
 ## construct the Gaussian bandpass filter
 bandapass_filter = stp.cascade.get_method("gaussian")
-filter = bandapass_filter(R_.shape, num_cascade_levels, gauss_scale=0.5, 
+filter = bandapass_filter(R_.shape, num_cascade_levels, gauss_scale=0.5,
                           gauss_scale_0=0.5)
 
 ## plot the bandpass filter weights
@@ -109,10 +109,10 @@ fig = plt.figure()
 ax = fig.gca()
 L = max(N, M)
 for k in range(num_cascade_levels):
-    ax.semilogx(np.linspace(0, L/2, len(filter["weights_1d"][k, :])), 
-                filter["weights_1d"][k, :], "k-", 
+    ax.semilogx(np.linspace(0, L/2, len(filter["weights_1d"][k, :])),
+                filter["weights_1d"][k, :], "k-",
                 basex=pow(0.5*L/3, 1.0/(num_cascade_levels-2)))
-                
+
 ax.set_xlim(1, L/2)
 ax.set_ylim(0, 1)
 ax.get_xaxis().set_major_formatter(ticker.ScalarFormatter())
