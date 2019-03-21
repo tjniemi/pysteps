@@ -309,7 +309,7 @@ def generate_noise_2d_fft_filter(F, randstate=None, seed=None,
       raise ValueError("F contains non-finite values")
 
     if randstate is None:
-        ranstate = np.random
+        randstate = np.random
 
     # set the seed
     if seed is not None:
