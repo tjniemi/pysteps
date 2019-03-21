@@ -77,6 +77,7 @@ Available Importers
     import_mch_metranet
     import_odim_hdf5
     import_knmi_hdf5
+    import_fmi_tif
 """
 
 
@@ -114,6 +115,16 @@ try:
     pyproj_imported = True
 except ImportError:
     pyproj_imported = False
+try:
+    import rasterio  # >=v1.0.9
+    rasterio_imported = True
+except ImportError:
+    rasterio_imported = False
+try:
+    import pycrs
+    pycrs_imported = True
+except ImportError:
+    pycrs_imported = False
 
 
 def import_bom_rf3(filename, **kwargs):
@@ -990,3 +1001,90 @@ def import_knmi_hdf5(filename, **kwargs):
     f.close()
 
     return R,None,metadata
+
+
+def import_fmi_tif(filename, **kwargs):
+    """Import a 8-bit TIF radar reflectivity composite from the FMI Open Data
+    archive.
+
+    Parameters
+    ----------
+    filename : str
+        Name of the file to import.
+
+    Other Parameters
+    ----------------
+    gzipped : bool
+        If True, the input file is treated as a compressed gzip file.
+
+    Returns
+    -------
+    out : tuple
+        A three-element tuple containing the reflectivity composite in dBZ
+        imported from the FMI Open data archive geotiff and the associated
+        quality field and metadata. The quality field is currently set to None.
+
+    """
+    if not rasterio_imported:
+        raise MissingOptionalDependency(
+            "rasterio package is required to import radar "
+            "reflectivity composites using FMI open Geotiff specification "
+            "but it is not installed")
+    if not pycrs_imported:
+        raise MissingOptionalDependency(
+            "pycrs package is required to import radar "
+            "reflectivity composites using FMI open Geotiff specification "
+            "but it is not installed")
+
+    gzipped = kwargs.get("gzipped", False)
+
+    if gzipped is False:
+        with rasterio.open(filename) as raster_data:
+            R = _import_fmi_tif_data(raster_data)
+            geodata = _import_fmi_tif_geodata(raster_data)
+    else:
+        with gzip.open(filename) as gzip_infile:
+            with rasterio.open(gzip_infile) as raster_data:
+                R = _import_fmi_tif_data(raster_data)
+                geodata = _import_fmi_tif_geodata(raster_data)
+
+    metadata = geodata
+
+    metadata["institution"] = "Finnish Meteorological Institute"
+    metadata["accutime"]    = 5.
+    metadata["unit"]        = "dBZ"
+    metadata["transform"]   = "dB"
+    metadata["zerovalue"]   = np.nanmin(R)
+    metadata["threshold"]   = np.nanmin(R[R > np.nanmin(R)])
+
+    return R, None, metadata
+
+
+def _import_fmi_tif_data(dataset):
+    precip = dataset.read(1)
+    no_data = 255  # Hardcoded because nodata value is wrong (0) in geotif
+    MASK = precip == no_data
+    precip = precip.astype(float)
+    precip[MASK] = np.nan
+    precip = (precip - 64.0) / 2.0
+
+    return precip
+
+
+def _import_fmi_tif_geodata(dataset):
+    geodata = {}
+
+    proj4str = pycrs.parser.from_unknown_wkt(dataset.crs.wkt).to_proj4()
+    corner_coords = dataset.bounds
+    pixel_size = dataset.res
+
+    geodata["projection"]  = proj4str
+    geodata["x1"]          = corner_coords.left
+    geodata["y1"]          = corner_coords.bottom
+    geodata["x2"]          = corner_coords.right
+    geodata["y2"]          = corner_coords.top
+    geodata["xpixelsize"]  = pixel_size[0]
+    geodata["ypixelsize"]  = pixel_size[1]
+    geodata["yorigin"]     = 'upper'
+
+    return geodata
