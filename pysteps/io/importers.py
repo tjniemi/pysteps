@@ -120,11 +120,6 @@ try:
     rasterio_imported = True
 except ImportError:
     rasterio_imported = False
-try:
-    import pycrs
-    pycrs_imported = True
-except ImportError:
-    pycrs_imported = False
 
 
 def import_bom_rf3(filename, **kwargs):
@@ -1030,11 +1025,6 @@ def import_fmi_tif(filename, **kwargs):
             "rasterio package is required to import radar "
             "reflectivity composites using FMI open Geotiff specification "
             "but it is not installed")
-    if not pycrs_imported:
-        raise MissingOptionalDependency(
-            "pycrs package is required to import radar "
-            "reflectivity composites using FMI open Geotiff specification "
-            "but it is not installed")
 
     gzipped = kwargs.get("gzipped", False)
 
@@ -1074,7 +1064,9 @@ def _import_fmi_tif_data(dataset):
 def _import_fmi_tif_geodata(dataset):
     geodata = {}
 
-    proj4str = pycrs.parser.from_unknown_wkt(dataset.crs.wkt).to_proj4()
+    pr = pyproj.Proj(dataset.crs)
+    proj4str = pr.definition_string()
+
     corner_coords = dataset.bounds
     pixel_size = dataset.res
 
