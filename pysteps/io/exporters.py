@@ -721,10 +721,6 @@ def _convert_proj4_to_grid_mapping(proj4str):
         v1 = d["lat_1"] if "lat_1" in d else float(0)
         v2 = d["lat_2"] if "lat_2" in d else float(0)
         params["standard_parallel"] = (float(v1), float(v2))
-    elif d["proj"] == "utm":  # Universal Transverse Mercator
-        grid_mapping_var_name = "universal_transverse_mercator"
-        grid_mapping_name = "universal_transverse_mercator"
-        params["utm_zone_number"] = 35
     else:
         print('unknown projection', d["proj"])
         return None, None, None
