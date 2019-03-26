@@ -69,6 +69,7 @@ Available Exporters
 
     initialize_forecast_exporter_kineros
     initialize_forecast_exporter_netcdf
+    initialize_forecast_exporter_geotiff
 
 Generic functions
 -----------------
@@ -94,6 +95,12 @@ try:
     pyproj_imported = True
 except ImportError:
     pyproj_imported = False
+try:
+    import rasterio  # >=v1.0.9
+    from rasterio.transform import from_origin
+    rasterio_imported = True
+except ImportError:
+    rasterio_imported = False
 
 # TODO(exporters): This is a draft version of the kineros exporter.
 # Revise the variable names and
@@ -411,6 +418,116 @@ def initialize_forecast_exporter_netcdf(filename, startdate, timestep,
     return exporter
 
 
+# TODO(exporters): This is a draft version of the geotiff exporter.
+# Revise the variable names and
+# the structure of the file if necessary.
+
+def initialize_forecast_exporter_geotiff(filename, startdate, timestep,
+                                        n_timesteps, shape, n_ens_members,
+                                        metadata, incremental=None):
+    """Initialize a GeoTiff forecast exporter.
+
+    A separate file is produced for each time step in each ensemble memeber.
+    
+    Parameters
+    ----------
+    filename : str
+        Name of the output file.
+        
+    startdate : datetime.datetime
+        Start date of the forecast as datetime object.
+        
+    timestep : int
+        Time step of the forecast (minutes).
+        
+    n_timesteps : int
+        Number of time steps in the forecast this argument is ignored if         
+        incremental is set to 'timestep'.
+        
+    shape : tuple of int
+        Two-element tuple defining the shape (height,width) of the forecast 
+        grids.
+        
+    n_ens_members : int
+        Number of ensemble members in the forecast. This argument is ignored if
+        incremental is set to 'member'.
+        
+    metadata: dict
+        Metadata dictionary containing the projection,x1,x2,y1,y2 and unit      
+        attributes described in the documentation of 
+        :py:mod:`pysteps.io.importers`.
+        
+    incremental : {None}, optional
+        Currently not implemented for this method.
+
+    Returns
+    -------
+    exporter : dict
+        The return value is a dictionary containing an exporter object. This 
+        can be used with :py:func:`pysteps.io.exporters.export_forecast_dataset` 
+        to write datasets into the given file format.
+    
+    """
+
+    if incremental is not None:
+        raise ValueError("unknown option %s: incremental writing is not supported" % incremental)
+
+    exporter = {}
+
+    basefn, extfn = os.path.splitext(filename)
+    if extfn != ".tif":
+        extfn = ".tif"
+
+    # one file for each time on each member
+    n_ens_members = np.min((99, n_ens_members))
+    fns = []
+    for i in range(n_ens_members):
+        for j in range(n_timesteps):
+            t = (j+1)*timestep
+            fn = "%s_member_%02d+%03d_min%s" % (basefn, i, t, extfn)
+            fns.append(fn)
+    h, w = shape
+
+    if metadata["unit"] == "mm/h":
+        var_name = "Intensity"
+        var_long_name = "Intensity in mm/hr"
+        var_unit = "mm/hr"
+        var_nodata = -1
+    elif metadata["unit"] == "mm":
+        var_name = "Depth"
+        var_long_name = "Accumulated depth in mm"
+        var_unit = "mm"
+        var_nodata = -1
+    elif metadata["unit"] == "dBZ":
+        var_name = "reflectivity"
+        var_long_name = "Equivalent reflectivity factor"
+        var_unit = "dBZ"
+        var_nodata = -32
+    else:
+        raise ValueError("unsupported unit %s" % metadata["unit"])
+
+    transform = from_origin(metadata["x1"], metadata["y2"],
+                            metadata["xpixelsize"], metadata["ypixelsize"])
+
+    exporter["method"] = "geotiff"
+    exporter["ncfile"] = fns
+    exporter["var_name"] = var_name
+    exporter["var_long_name"] = var_long_name
+    exporter["var_unit"] = var_unit
+    exporter["startdate"] = startdate
+    exporter["timestep"] = timestep
+    exporter["metadata"] = metadata
+    exporter["incremental"] = incremental
+    exporter["num_timesteps"] = n_timesteps
+    exporter["num_ens_members"] = n_ens_members
+    exporter["shape"] = shape
+    exporter["proj"] = metadata["projection"]
+    exporter["transform"] = transform
+    exporter["nodata"] = var_nodata
+
+    return exporter
+
+
 def export_forecast_dataset(F, exporter):
     """Write a forecast array into a file.
 
@@ -444,6 +561,10 @@ def export_forecast_dataset(F, exporter):
         raise MissingOptionalDependency(
             "netCDF4 package is required for netcdf "
             "exporters but it is not installed")
+    if exporter["method"] == "geotiff" and not rasterio_imported:
+        raise MissingOptionalDependency(
+            "rasterio package is required for geotiff "
+            "exporters but it is not installed")
 
     if exporter["incremental"] is None:
         shp = (exporter["num_ens_members"], exporter["num_timesteps"],
@@ -465,6 +586,8 @@ def export_forecast_dataset(F, exporter):
         _export_netcdf(F, exporter)
     elif exporter["method"] == "kineros":
         _export_kineros(F, exporter)
+    elif exporter["method"] == "geotiff":
+        _export_geotiff(F, exporter)
     else:
         raise ValueError("unknown exporter method %s" % exporter["method"])
 
@@ -483,7 +606,9 @@ def close_forecast_file(exporter):
 
     """
     if exporter["method"] == "kineros":
-        pass # no need to close the file
+        pass  # no need to close the file
+    elif exporter["method"] == "geotiff":
+        pass  # no need to close the file
     else:
         exporter["ncfile"].close()
 
@@ -532,6 +657,28 @@ def _export_netcdf(F, exporter):
         var_ens_num[len(var_ens_num)-1] = len(var_ens_num)
 
 
+def _export_geotiff(F, exporter):
+    num_timesteps = exporter["num_timesteps"]
+    num_ens_members = exporter["num_ens_members"]
+
+    print("Exporting files. ")
+
+    for n in range(num_ens_members):
+        for t in range(num_timesteps):
+            i = n*num_timesteps+t
+            fn = exporter["ncfile"][i]
+            print(fn)
+            F_ = F[n, t, :, :].astype('float32')
+            with rasterio.open(fn, 'w', driver='GTiff',
+                               height=exporter['shape'][0],
+                               width=exporter['shape'][1],
+                               count=1, dtype='float32', crs=exporter['proj'],
+                               transform=exporter['transform'],
+                               nodata=exporter["nodata"]) as dst:
+                dst.write(F_, 1)
+                dst.set_band_description(1, exporter["var_long_name"])
+
+
 # TODO(exporters): Write methods for converting Proj.4 projection definitions
 # into CF grid mapping attributes. Currently this has been implemented for
 # the stereographic projection.
@@ -574,6 +721,10 @@ def _convert_proj4_to_grid_mapping(proj4str):
         v1 = d["lat_1"] if "lat_1" in d else float(0)
         v2 = d["lat_2"] if "lat_2" in d else float(0)
         params["standard_parallel"] = (float(v1), float(v2))
+    elif d["proj"] == "utm":  # Universal Transverse Mercator
+        grid_mapping_var_name = "universal_transverse_mercator"
+        grid_mapping_name = "universal_transverse_mercator"
+        params["utm_zone_number"] = 35
     else:
         print('unknown projection', d["proj"])
         return None, None, None
