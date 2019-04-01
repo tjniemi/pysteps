@@ -25,6 +25,7 @@ except ImportError:
 try:
     import cartopy.crs as ccrs
     import cartopy.feature as cfeature
+    from cartopy.io.img_tiles import OSM, Stamen, GoogleTiles
     cartopy_imported = True
 except ImportError:
     cartopy_imported = False
@@ -224,7 +225,7 @@ def plot_precip_field(R, type="intensity", map=None, geodata=None, units='mm/h',
                 Y = Y.reshape((y_coord.size, x_coord.size))
                 regular_grid = False
 
-            bm = _plot_map_cartopy(crs, x1, y1, x2, y2, cartopy_scale,
+            bm = _plot_map_cartopy_2(crs, x1, y1, x2, y2, cartopy_scale,
                                    drawlonlatlines=drawlonlatlines, lw=lw, subplot=cartopy_subplot)
             extent = (x1, x2, y2, y1)
 
@@ -507,7 +508,7 @@ def _plot_map_basemap(bm_params, drawlonlatlines=False, coastlinecolor=(0.3,0.3,
 
     return bm
 
-def _plot_map_cartopy(crs, x1, y1, x2, y2, scale, drawlonlatlines=False,
+def _plot_map_cartopy(crs, x1, y1, x2, y2, scale, drawlonlatlines=True,
                       lw=0.5, subplot=(1,1,1)):
 
     if isinstance(subplot, gridspec.SubplotSpec):
@@ -533,5 +534,31 @@ def _plot_map_cartopy(crs, x1, y1, x2, y2, scale, drawlonlatlines=False,
         ax.gridlines(crs=ccrs.PlateCarree())
 
     ax.set_extent([x1, x2, y1, y2], crs)
+
+    return ax
+
+
+def _plot_map_cartopy_2(crs, x1, y1, x2, y2, scale, drawlonlatlines=False,
+                      lw=0.5, subplot=(1,1,1)):
+    
+#    imagery = GoogleTiles()
+#    imagery = Stamen()
+    imagery = OSM()
+
+    if isinstance(subplot, gridspec.SubplotSpec):
+        ax = plt.subplot(subplot, projection=crs)
+    else:
+        ax = plt.subplot(subplot[0], subplot[1], subplot[2], projection=crs)
+        
+    ax.set_extent([x1, x2, y1, y2], crs)
+    
+    # Add the imagery to the map.
+    ax.add_image(imagery, 7, interpolation='spline36', regrid_shape=2000)
+    
+
+    if drawlonlatlines:
+        gl = ax.gridlines(crs=ccrs.PlateCarree(), alpha=0.2)
+
+    
 
     return ax

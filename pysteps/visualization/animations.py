@@ -239,10 +239,11 @@ def animate(R_obs, nloops=2, timestamps=None, R_fct=None, timestep_min=5,
                                              colorbar=colorbar, **kwargs)
                     plt.text(0.99, 0.99, leadtime, transform=ax.transAxes, ha="right", va="top")
                     
-                    if motion_plot.lower() == "quiver":
-                        st.plt.quiver(UV, ax=ax, geodata=geodata, **kwargs)
-                    elif motion_plot.lower() == "streamplot":
-                        st.plt.streamplot(UV, ax=ax, geodata=geodata, **kwargs)
+                    if UV is not None and motion_plot is not None:
+                        if motion_plot.lower() == "quiver":
+                            st.plt.quiver(UV, ax=ax, geodata=geodata, **kwargs)
+                        elif motion_plot.lower() == "streamplot":
+                            st.plt.streamplot(UV, ax=ax, geodata=geodata, **kwargs)
 
                     if savefig & (loop == 0):
                             figname = "%s/%s_frame_%02d_ensmean.%s" % \
